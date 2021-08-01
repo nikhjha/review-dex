@@ -6,7 +6,6 @@ import Shopify, { ApiVersion } from "@shopify/shopify-api";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
-import bodyParser from 'koa-bodyparser';
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -89,19 +88,23 @@ app.prepare().then(async () => {
   router.post(
     "/inject-assets",
     async (ctx) => {
-      const session = ctx.request.body
-      console.log(session.shop,session.accessToken);
+      console.log("aah");
+      // Load the current session to get the `accessToken`.
+      const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
       // Create a new client for the specified shop.
-      const client = new Shopify.Clients.Rest(session.shop, session.accessToken);
+      const client = new Shopify.Clients.Rest(
+        session.shop,
+        session.accessToken
+      );
       // Use `client.get` to request the specified Shopify REST API endpoint, in this case `products`.
-      const themes = await client.get({
-      path: 'themes',
+      const products = await client.get({
+        path: "products",
       });
       ctx.response.status = 200;
-      ctx.response.body = JSON.stringify(themes);
+      ctx.response.body = products;
+
     }
   );
-
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
   router.get("(.*)", async (ctx) => {
@@ -117,7 +120,6 @@ app.prepare().then(async () => {
 
   server.use(router.allowedMethods());
   server.use(router.routes());
-  server.use(bodyParser());
   server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
   });
