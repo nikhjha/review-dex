@@ -2,12 +2,15 @@ import "@babel/polyfill";
 import dotenv from "dotenv";
 import "isomorphic-fetch";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
-import Shopify, { ApiVersion } from "@shopify/shopify-api";
+import Shopify, { ApiVersion, DataType } from "@shopify/shopify-api";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
+import fs from "fs";
+import path from "path";
 
 dotenv.config();
+
 const port = parseInt(process.env.PORT, 10) || 8081;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({
@@ -85,10 +88,9 @@ app.prepare().then(async () => {
     }
   );
 
-  router.post(
-    "/inject-assets",
-    async (ctx) => {
-      console.log("aah");
+  router.post("/inject-assets", async (ctx) => {
+    console.log("aah");
+    try {
       // Load the current session to get the `accessToken`.
       const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
       // Create a new client for the specified shop.
@@ -97,16 +99,70 @@ app.prepare().then(async () => {
         session.accessToken
       );
       // Use `client.get` to request the specified Shopify REST API endpoint, in this case `products`.
-      const products = await client.get({
-        path: "products",
+      const themes = await client.get({
+        path: "themes",
+      });
+      let mainTheme;
+      themes.body.themes.forEach((theme) => {
+        if (theme.role === "main") {
+          mainTheme = theme.id;
+        }
+      });
+      const reviewPanelLiquid = fs.readFileSync(
+        `${path.resolve("server","..","template_shopify","review-panel.liquid")}`,
+        "utf8"
+      );
+      let reviewPanelData = {
+        asset: {
+          key: "sections/review-panel.liquid",
+          value: reviewPanelLiquid,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
+      });
+      const reviewPanelJs = fs.readFileSync(
+        `${path.resolve("server","..","template_shopify","review-panel.js")}`,
+        "utf8"
+      );
+      reviewPanelData = {
+        asset: {
+          key: "assets/review-panel.js",
+          value: reviewPanelJs,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
+      });
+      const reviewPanelCSS = fs.readFileSync(
+        `${path.resolve("server","..","template_shopify","review-panel.css")}`,
+        "utf8"
+      );
+      reviewPanelData = {
+        asset: {
+          key: "assets/review-panel.css",
+          value: reviewPanelCSS,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
       });
       ctx.response.status = 200;
-      ctx.response.body = products;
-
+    } catch (e) {
+      ctx.response.status = 503;
+      ctx.response.body = e;
+      console.log(e);
     }
-  );
+  });
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
+  router.get("/_next/image",handleRequest); // image content is clear
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 
@@ -117,7 +173,6 @@ app.prepare().then(async () => {
       await handleRequest(ctx);
     }
   });
-
   server.use(router.allowedMethods());
   server.use(router.routes());
   server.listen(port, () => {
