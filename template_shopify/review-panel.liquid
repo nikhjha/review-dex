@@ -1,4 +1,4 @@
-{{ 'review.css' | asset_url | stylesheet_tag }}
+{{ 'review-panel.css' | asset_url | stylesheet_tag }}
 <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
       rel="stylesheet"
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-<script src="{{ 'review.js' | asset_url}}"></script>
+<script src="{{ 'review-panel.js' | asset_url}}"></script>
 
 {% schema %}
   {
@@ -69,7 +69,7 @@
     "settings": [],
 	"presets": [
 	{
-		"name" : "review"
+		"name" : "Reviews Panel"
 	}
 	]
   }
