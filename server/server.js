@@ -3,11 +3,14 @@ import dotenv from "dotenv";
 import "isomorphic-fetch";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
 import Shopify, { ApiVersion, DataType } from "@shopify/shopify-api";
+import { connect as mongoose } from "mongoose";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
 import fs from "fs";
 import path from "path";
+import apiRouter from "./api";
+import Merchant from "./model/merchant";
 
 dotenv.config();
 
@@ -36,6 +39,10 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
+  mongoose("mongodb://localhost:27017/reviewDexDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
     createShopifyAuth({
@@ -58,7 +65,22 @@ app.prepare().then(async () => {
             `Failed to register APP_UNINSTALLED webhook: ${response.result}`
           );
         }
-
+        const merchant = Merchant.countDocuments({ shop: shop });
+        console.log(merchant);
+        if (merchant === 0) {
+          const newMerchant = new Merchant({
+            shop: shop,
+            avarageRating: 0,
+            totalReviews: 0,
+            oneStar: 0,
+            twoStar: 0,
+            threeStar: 0,
+            fourStar: 0,
+            fiveStar: 0,
+            emailRequest: 0,
+          });
+          await newMerchant.save();
+        }
         // Redirect to app with shop parameter upon auth
         ctx.redirect(`/?shop=${shop}&host=${host}`);
       },
@@ -109,7 +131,12 @@ app.prepare().then(async () => {
         }
       });
       const reviewPanelLiquid = fs.readFileSync(
-        `${path.resolve("server","..","template_shopify","review-panel.liquid")}`,
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "review-panel.liquid"
+        )}`,
         "utf8"
       );
       let reviewPanelData = {
@@ -124,7 +151,12 @@ app.prepare().then(async () => {
         type: DataType.JSON,
       });
       const reviewPanelJs = fs.readFileSync(
-        `${path.resolve("server","..","template_shopify","review-panel.js")}`,
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "review-panel.js"
+        )}`,
         "utf8"
       );
       reviewPanelData = {
@@ -139,7 +171,12 @@ app.prepare().then(async () => {
         type: DataType.JSON,
       });
       const reviewPanelCSS = fs.readFileSync(
-        `${path.resolve("server","..","template_shopify","review-panel.css")}`,
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "review-panel.css"
+        )}`,
         "utf8"
       );
       reviewPanelData = {
@@ -162,7 +199,8 @@ app.prepare().then(async () => {
   });
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
-  router.get("/_next/image",handleRequest); // image content is clear
+  router.get("/_next/image", handleRequest); // image content is clear
+  router.get("/api", apiRouter.routes());
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 

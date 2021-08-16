@@ -16,17 +16,17 @@ function setReviewDrop() {
   });
 }
 setReviewDrop();
-const reviewInfo = {
-  totalReview: 1966,
-  overallRating: 4.9,
-  total5Star: 1767,
-  total4Star: 181,
-  total3Star: 16,
-  total2Star: 2,
-  total1Star: 0,
+
+const getInfo = async (callback) => {
+  const shop = document.getElementById("review-dex-shop");
+  const url = "" + "/api/getMerchantDetail/" + shop;
+  const { merchant, reviews } = await fetch(url);
+  const reviewInfo = merchant;
+  const reviewData = reviews;
+  callback(reviewInfo, reviewData);
 };
 
-function renderReviewsInfo() {
+function renderReviewsInfo(reviewInfo) {
   const totalReviews = document.querySelector("#total-reviews");
   totalReviews.innerText = `${reviewInfo.totalReview} Reviews`;
   document
@@ -66,108 +66,6 @@ function renderReviewsInfo() {
   }
 }
 
-// const reviewData = fetch("https://localhost:3000/reviews")
-
-// const api_url = "https://localhost:3000/reviews";
-
-// async function getapi(url) {
-//     const response = await fetch(url);
-//     var data = await response.json();
-//     console.log(data);
-//     if (response) {
-//         hideloader();
-//     }
-//     show(data);
-// }
-// getapi(api_url);
-
-const reviewData = [
-  {
-    name: "Aditi S.",
-    img: "http://127.0.0.1:5500/pic-1.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review: "Good.",
-  },
-  {
-    name: "Harshada T.",
-    img: "http://127.0.0.1:5500/pic-2.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review:
-      "This dress steal my heart 💖 i am in love with this dress infact all dresses which i bought from berrylush recently!! The fabric, fitting and comfort is AWESOME.. all i wanna say is i love you berrylush ❤️ thank you for making my birthday so special 💯❤️",
-  },
-  {
-    name: "Suman Y.",
-    img: "http://127.0.0.1:5500/pic-3.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review:
-      "Great quality , amazing fitting, feels great to wear it. Very very stylish top . Loved it.",
-  },
-  {
-    name: "manish p.",
-    img: "http://127.0.0.1:5500/pic-4.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 4,
-    review: "gud",
-  },
-  {
-    name: "Suman Y.",
-    img: "http://127.0.0.1:5500/pic-3.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review:
-      "Great quality , amazing fitting, feels great to wear it. Very very stylish top . Loved it.",
-  },
-  {
-    name: "Aditi S.",
-    img: "http://127.0.0.1:5500/pic-1.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review: "Good.",
-  },
-  {
-    name: "Harshada T.",
-    img: "http://127.0.0.1:5500/pic-2.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 5,
-    review:
-      "This dress steal my heart 💖 i am in love with this dress infact all dresses which i bought from berrylush recently!! The fabric, fitting and comfort is AWESOME.. all i wanna say is i love you berrylush ❤️ thank you for making my birthday so special 💯❤️",
-  },
-  {
-    name: "manish p.",
-    img: "http://127.0.0.1:5500/pic-4.png",
-    alt: "profile-pic",
-    productImg: "http://127.0.0.1:5500/product-pic.png",
-    productInfo: "BERRYLUSH WOMEN BLACK FLORAL PRINT SHOULDER STRAP TOP",
-    date: "7/26/2021",
-    rating: 4,
-    review: "gud",
-  },
-];
-
 function resizeGridItem(content, grid) {
   rowHeight = parseInt(
     window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
@@ -185,14 +83,14 @@ function resizeGridItem(content, grid) {
   content.style.gridRowEnd = "span " + rowSpan;
 }
 
-function renderReviews() {
+function renderReviews(reviewData) {
   const reviewContentDiv = document.querySelector(".review-content");
   reviewData.forEach((reviewItem) => {
     const reviewItemDiv = document.createElement("div");
     reviewItemDiv.className = "review-item";
     const reviewImage = document.createElement("img");
     reviewImage.src = reviewItem.img;
-    reviewImage.alt = reviewItem.alt;
+    reviewImage.alt = reviewItem.name;
     reviewItemDiv.appendChild(reviewImage);
     const reviewDetailDiv = document.createElement("div");
     reviewDetailDiv.className = "review-detail";
@@ -233,8 +131,10 @@ function renderReviews() {
     });
   });
 }
-renderReviewsInfo();
-renderReviews();
+getInfo((reviewInfo, reviewData) => {
+  renderReviewsInfo(reviewInfo);
+  renderReviews(reviewData);
+});
 function setStars() {
   const stars = document.querySelectorAll(".stars");
   stars.forEach((starDiv) => {
@@ -256,8 +156,10 @@ window.onload = () => {
   setStars();
 };
 document.addEventListener("shopify:section:load", () => {
-  setReviewDrop();
-  renderReviewsInfo();
-  renderReviews();
-  setStars();
+  getInfo((reviewInfo, reviewData) => {
+    setReviewDrop();
+    renderReviewsInfo(reviewInfo);
+    renderReviews(reviewData);
+    setStars();
+  });
 });

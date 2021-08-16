@@ -1,66 +1,67 @@
 {{ 'review-panel.css' | asset_url | stylesheet_tag }}
 <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-      rel="stylesheet"
-      />
-    <div class="review-section">
-      <h1 class="header">REVIEWS</h1>
-      <p class="description">
-        Here's What some of Our Happy Customers Have to Say About Us!
-      </p>
-      <div class="review-container">
-        <div class="review-bar">
+  href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+  rel="stylesheet"
+/>
+<div class="review-section">
+  <h1 class="header">REVIEWS</h1>
+  <p class="description">
+    Here's What some of Our Happy Customers Have to Say About Us!
+  </p>
+  <div class="review-container">
+    <div class="review-bar">
+      <div class="stars">
+        <input name="rating" type="number" value="5"/>
+      </div>
+      <p id="total-reviews"></p>
+      <button id="review-drop-btn"><span class="material-icons-outlined "> expand_more </span></button>
+      <button id="review-setting-btn"><span class="material-icons-outlined "> tune </span></button>
+      <div id="review-drop">
+        <p><span class="material-icons-outlined"> star </span></p>
+        <div class="all-review-info">
           <div class="stars">
             <input name="rating" type="number" value="5"/>
           </div>
-          <p id="total-reviews"></p>
-          <button id="review-drop-btn"><span class="material-icons-outlined "> expand_more </span></button>
-          <button id="review-setting-btn"><span class="material-icons-outlined "> tune </span></button>
-          <div id="review-drop">
-            <p><span class="material-icons-outlined"> star </span></p>
-            <div class="all-review-info">
-              <div class="stars">
-                <input name="rating" type="number" value="5"/>
-              </div>
-              <div class="star-bar" id="star5-bar">
-                <div></div>
-              </div>
-              <p class="star-total" id="star5-total"></p>
-              <div class="stars">
-                <input name="rating" type="number" value="4"/>
-              </div>
-              <div class="star-bar" id="star4-bar">
-                <div></div>
-              </div>
-              <p class="star-total" id="star4-total"></p>
-              <div class="stars">
-                <input name="rating" type="number" value="3"/>
-              </div>
-              <div class="star-bar" id="star3-bar">
-                <div></div>
-              </div>
-              <p class="star-total" id="star3-total"></p>
-              <div class="stars">
-                <input name="rating" type="number" value="2"/>
-              </div>
-              <div class="star-bar" id="star2-bar">
-                <div></div>
-              </div>
-              <p class="star-total" id="star2-total"></p>
-              <div class="stars">
-                <input name="rating" type="number" value="1"/>
-              </div>
-              <div class="star-bar" id="star1-bar">
-                <div></div>
-              </div>
-              <p class="star-total" id="star1-total"></p>
-            </div>
+          <div class="star-bar" id="star5-bar">
+            <div></div>
           </div>
-        </div>
-        <div class="review-content">
+          <p class="star-total" id="star5-total"></p>
+          <div class="stars">
+            <input name="rating" type="number" value="4"/>
+          </div>
+          <div class="star-bar" id="star4-bar">
+            <div></div>
+          </div>
+          <p class="star-total" id="star4-total"></p>
+          <div class="stars">
+            <input name="rating" type="number" value="3"/>
+          </div>
+          <div class="star-bar" id="star3-bar">
+            <div></div>
+          </div>
+          <p class="star-total" id="star3-total"></p>
+          <div class="stars">
+            <input name="rating" type="number" value="2"/>
+          </div>
+          <div class="star-bar" id="star2-bar">
+            <div></div>
+          </div>
+          <p class="star-total" id="star2-total"></p>
+          <div class="stars">
+            <input name="rating" type="number" value="1"/>
+          </div>
+          <div class="star-bar" id="star1-bar">
+            <div></div>
+          </div>
+          <p class="star-total" id="star1-total"></p>
         </div>
       </div>
     </div>
+    <div class="review-content">
+    </div>
+  </div>
+</div>
+<script id="review-dex-shop">{{ shop.domain }}</script>
 <script src="{{ 'review-panel.js' | asset_url}}"></script>
 
 {% schema %}
