@@ -25,8 +25,7 @@ export default function Statistics() {
             setAverageRating(merchant.avarageRating);
         }        
         getData();
-    }, [])
-    const 
+    }, []);
     return (
         <Page title="Statistics">
         <Stack>
