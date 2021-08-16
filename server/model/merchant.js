@@ -1,4 +1,4 @@
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 
 const merchantSchema = new Schema({
@@ -13,7 +13,7 @@ const merchantSchema = new Schema({
     emailRequest : Number,
 });
 
-const Merchant = Model("Merchant", merchantSchema);
+const Merchant = model("Merchant", merchantSchema);
 
 export default Merchant;
 

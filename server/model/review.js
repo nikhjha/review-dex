@@ -1,4 +1,4 @@
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const reviewSchema = new Schema({
     merchantID : String,
@@ -15,6 +15,6 @@ const reviewSchema = new Schema({
     productInfo : String,
 });
 
-const Review = Model("Review", reviewSchema);
+const Review = model("Review", reviewSchema);
 
 export default Review;
