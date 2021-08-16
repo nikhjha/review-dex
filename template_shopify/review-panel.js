@@ -18,7 +18,7 @@ function setReviewDrop() {
 setReviewDrop();
 
 const getInfo = async (callback) => {
-  const shop = document.getElementById("review-dex-shop");
+  const shop = document.getElementById("review-dex-shop").innerHTML;
   const url = "" + "/api/getMerchantDetail/" + shop;
   const { merchant, reviews } = await fetch(url);
   const reviewInfo = merchant;

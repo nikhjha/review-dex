@@ -201,7 +201,7 @@ app.prepare().then(async () => {
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
   router.get("/_next/image", handleRequest); // image content is clear
-  router.get("/api", apiRouter.routes());
+  router.use("/api", apiRouter.routes());
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 
@@ -213,10 +213,10 @@ app.prepare().then(async () => {
     }
   });
   server.use(cors({origin : function(ctx) {
-    if (ctx.url === '/api/getMerchantDetail') {
-      return '*';
-    }
-    return false;
+    // if (ctx.url === '/api/getMerchantDetail') {
+    //   return '*';
+    // }
+    return "*";
   }}));
   server.use(router.allowedMethods());
   server.use(router.routes());
