@@ -19,7 +19,7 @@ export default function Statistics() {
                 return response;
             });
             console.log(result);
-            const merchant = result.getData.merchant;
+            const merchant = result.data.merchant;
             setTotalReviews(merchant.totalReviews);
             setEmailSent(merchant.emailRequest);
             setAverageRating(merchant.avarageRating);
