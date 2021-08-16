@@ -65,7 +65,7 @@ app.prepare().then(async () => {
             `Failed to register APP_UNINSTALLED webhook: ${response.result}`
           );
         }
-        const isMerchant = Merchant.exists({ shop: shop });
+        const isMerchant = await Merchant.exists({ shop: shop });
         console.log(isMerchant);
         if (!isMerchant) {
           const newMerchant = new Merchant({
