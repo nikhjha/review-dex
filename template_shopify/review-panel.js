@@ -20,8 +20,17 @@ setReviewDrop();
 const getInfo = async (callback) => {
   const shop = document.getElementById("review-dex-shop").innerHTML;
   const url = "" + "/api/getMerchantDetail/" + shop;
-  const { merchant, reviews } = await fetch(url);
-  const reviewInfo = merchant;
+  const data = await fetch(url);
+  const { merchant, reviews } = await data.json();
+  const reviewInfo = {
+    totalReview: merchant.totalReviews,
+    overallRating: merchant.avarageRating,
+    total5Star: merchant.fiveStar,
+    total4Star: merchant.fourStar,
+    total3Star: merchant.threeStar,
+    total2Star: merchant.twoStar,
+    total1Star: merchant.oneStar,
+  };
   const reviewData = reviews;
   callback(reviewInfo, reviewData);
 };
@@ -60,7 +69,7 @@ function renderReviewsInfo(reviewInfo) {
       default:
         break;
     }
-    const totalPercent = Math.round((totalStar * 100) / reviewInfo.totalReview);
+    const totalPercent = reviewInfo.totalReview !== 0 ? Math.round((totalStar * 100) / reviewInfo.totalReview) : 0;
     bar.style.width = `${totalPercent}%`;
     total.innerText = `(${totalStar})`;
   }
@@ -89,7 +98,7 @@ function renderReviews(reviewData) {
     const reviewItemDiv = document.createElement("div");
     reviewItemDiv.className = "review-item";
     const reviewImage = document.createElement("img");
-    reviewImage.src = reviewItem.img;
+    reviewImage.src = reviewItem.customerImg;
     reviewImage.alt = reviewItem.name;
     reviewItemDiv.appendChild(reviewImage);
     const reviewDetailDiv = document.createElement("div");
@@ -97,7 +106,7 @@ function renderReviews(reviewData) {
     const para1 = document.createElement("p");
     para1.innerText = reviewItem.name;
     const para2 = document.createElement("p");
-    para2.innerText = reviewItem.date;
+    para2.innerText = reviewItem.created;
     reviewDetailDiv.appendChild(para1);
     reviewDetailDiv.appendChild(para2);
     const reviewStars = document.createElement("div");
@@ -109,7 +118,7 @@ function renderReviews(reviewData) {
     reviewStars.appendChild(reviewRating);
     reviewDetailDiv.appendChild(reviewStars);
     const para3 = document.createElement("p");
-    para3.innerText = reviewItem.review;
+    para3.innerText = reviewItem.body;
     reviewDetailDiv.appendChild(para3);
     const productInfo = document.createElement("div");
     productInfo.className = "review-product";

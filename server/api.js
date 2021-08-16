@@ -2,7 +2,6 @@ import Router from "koa-router";
 import Shopify from "@shopify/shopify-api";
 import Merchant from "./model/merchant";
 import Review from "./model/review";
-import { canNotDefineSchemaWithinExtensionMessage } from "graphql/validation/rules/LoneSchemaDefinition";
 
 const router =  Router();
 
@@ -34,7 +33,7 @@ router.get("/reviews", async(ctx) => {
         ctx.response.body = { reviews : []};
         return;
     }
-    const reviews = await Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}); 
+    const reviews = await Review.find({merchantID : doc.id}); 
     ctx.response.status = 200;
     ctx.response.body = { reviews}; 
     }
