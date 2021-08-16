@@ -3,7 +3,7 @@ import Shopify from "@shopify/shopify-api";
 import Merchant from "./model/merchant";
 import Review from "./model/review";
 
-const router = new Router();
+const router =  Router();
 
 router.get("/getMerchantDetail/:id",(ctx)=>{
     const shop = ctx.params.id;
