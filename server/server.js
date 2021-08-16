@@ -11,6 +11,7 @@ import fs from "fs";
 import path from "path";
 import apiRouter from "./api";
 import Merchant from "./model/merchant";
+import cors from "koa2-cors";
 
 dotenv.config();
 
@@ -211,6 +212,12 @@ app.prepare().then(async () => {
       await handleRequest(ctx);
     }
   });
+  server.use(cors({origin : function(ctx) {
+    if (ctx.url === '/api/getMerchantDetail') {
+      return '*';
+    }
+    return false;
+  }}));
   server.use(router.allowedMethods());
   server.use(router.routes());
   server.listen(port, () => {
