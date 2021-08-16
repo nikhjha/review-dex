@@ -11,22 +11,25 @@ router.get("/getMerchantDetail/:id",(ctx)=>{
         if(err){
             ctx.response.status = 400;
             ctx.response.body = err;
-            return;
         }
-        if(doc.totalReviews === 0){
+        else if(doc.totalReviews === 0){
             ctx.response.status = 200;
             ctx.response.body = {merchant : doc , reviews : []};
             return ;
         }
-        Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}, (err,reviews) => {
-            if(err){
-                ctx.response.status = 400;
-                ctx.response.body = err;
-                return;
-            }
-            ctx.response.status = 200;
-            ctx.response.body = {merchant : doc , reviews};
-        });
+        else{
+            Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}, (err,reviews) => {
+                if(err){
+                    ctx.response.status = 400;
+                    ctx.response.body = err;
+                    
+                }
+                else{
+                    ctx.response.status = 200;
+                    ctx.response.body = {merchant : doc , reviews};
+                }
+            });
+        }
     });
 });
 
@@ -36,22 +39,23 @@ router.get("/reviews", async(ctx) => {
         if(err){
             ctx.response.status = 400;
             ctx.response.body = err;
-            return;
         }
-        if(doc.totalReviews === 0){
+        else if(doc.totalReviews === 0){
             ctx.response.status = 200;
             ctx.response.body = { reviews : []};
             return ;
         }
-        Review.find({merchantID : doc.id},null,null, (err,reviews) => {
-            if(err){
-                ctx.response.status = 400;
-                ctx.response.body = err;
-                return;
-            }
-            ctx.response.status = 200;
-            ctx.response.body = {reviews};
-        });
+        else{
+            Review.find({merchantID : doc.id},null,null, (err,reviews) => {
+                if(err){
+                    ctx.response.status = 400;
+                    ctx.response.body = err;
+                }else{
+                    ctx.response.status = 200;
+                    ctx.response.body = {reviews};
+                }
+            });
+        }
     });
 });
 
@@ -61,10 +65,10 @@ router.get("/merchant", async(ctx) => {
         if(err){
             ctx.response.status = 400;
             ctx.response.body = err;
-            return;
+        }else{
+            ctx.response.status = 200;
+            ctx.response.body = {merchant : docs};
         }
-        ctx.response.status = 200;
-        ctx.response.body = {merchant : docs};
     });
 });
 
