@@ -15,7 +15,6 @@ router.get("/getMerchantDetail/:id",(ctx)=>{
         else if(doc.totalReviews === 0){
             ctx.response.status = 200;
             ctx.response.body = {merchant : doc , reviews : []};
-            return ;
         }
         else{
             Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}, (err,reviews) => {
@@ -43,7 +42,6 @@ router.get("/reviews", async(ctx) => {
         else if(doc.totalReviews === 0){
             ctx.response.status = 200;
             ctx.response.body = { reviews : []};
-            return ;
         }
         else{
             Review.find({merchantID : doc.id},null,null, (err,reviews) => {
