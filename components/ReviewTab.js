@@ -47,6 +47,7 @@ export default function ReviewTab({ tabs }) {
             return { ...review, id: review.id };
           }),
       ];
+      console.log(newAllReviews);
       setAllReviews(newAllReviews);
     }
     getData();
