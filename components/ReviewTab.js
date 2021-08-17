@@ -27,7 +27,6 @@ export default function ReviewTab({ tabs }) {
         return response;
       });
       const reviews = result.data.reviews;
-      console.log(result);
       const newAllReviews = [
         reviews.map((review) => {
           const {_id} = review;
@@ -50,7 +49,6 @@ export default function ReviewTab({ tabs }) {
             return { ...review, id : _id };
           }),
       ];
-      console.log(newAllReviews);
       setAllReviews(newAllReviews);
     }
     getData();
@@ -75,11 +73,10 @@ export default function ReviewTab({ tabs }) {
         setLoading(true);
         console.log(selectedResources);
         selectedResources.forEach(async (id) => {
-          const result = await axiosFetch(async (instance) => {
+          await axiosFetch(async (instance) => {
             const response = await instance.post("/api/publish/" + id);
             return response;
           });
-          console.log(result);
         });
         setLoading(false);
       },
@@ -91,11 +88,10 @@ export default function ReviewTab({ tabs }) {
         setLoading(true);
         console.log(selectedResources);
         selectedResources.forEach(async (id) => {
-          const result = await axiosFetch(async (instance) => {
+          await axiosFetch(async (instance) => {
             const response = await instance.post("/api/hide/" + id);
             return response;
           });
-          console.log(result);
         });
         setLoading(false);
       },

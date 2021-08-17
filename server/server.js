@@ -70,7 +70,6 @@ app.prepare().then(async () => {
           );
         }
         const isMerchant = await Merchant.exists({ shop: shop });
-        console.log(isMerchant);
         if (!isMerchant) {
           const newMerchant = new Merchant({
             shop: shop,
@@ -115,7 +114,6 @@ app.prepare().then(async () => {
   );
 
   router.post("/inject-assets", async (ctx) => {
-    console.log("aah");
     try {
       // Load the current session to get the `accessToken`.
       const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);

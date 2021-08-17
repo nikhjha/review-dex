@@ -80,14 +80,27 @@ router.get("/reviews", async(ctx) => {
     }
 });
 
-router.post("/publish/:id", (ctx) => {
-    console.log(ctx.params.id);
-    ctx.response.status = 200;
+router.post("/publish/:id", async(ctx) => {
+    const id = ctx.params.id;
+    try{
+        await Review.updateOne({_id : id},{ $set : {hidden : false}});
+        ctx.response.status = 200;
+    }catch(e){
+        ctx.response.status = 400;
+        ctx.response.body = e;
+    }
+    
 });
 
-router.post("/hide/:id", (ctx) => {
-    console.log(ctx.params.id);
-    ctx.response.status = 200;
+router.post("/hide/:id", async(ctx) => {
+    const id = ctx.params.id;
+    try{
+        await Review.updateOne({_id : id},{ $set : {hidden : true}});
+        ctx.response.status = 200;
+    }catch(e){
+        ctx.response.status = 400;
+        ctx.response.body = e;
+    }
 });
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
