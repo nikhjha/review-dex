@@ -30,21 +30,24 @@ export default function ReviewTab({ tabs }) {
       console.log(result);
       const newAllReviews = [
         reviews.map((review) => {
-          return { ...review, id: review.id };
+          const {_id} = review;
+            return { ...review, id : _id };
         }),
         reviews
           .filter((review) => {
             return review.about !== "your shop";
           })
           .map((review) => {
-            return { ...review, id: review.id };
+            const {_id} = review;
+            return { ...review, id : _id };
           }),
         reviews
           .filter((review) => {
             return review.about === "your shop";
           })
           .map((review) => {
-            return { ...review, id: review.id };
+            const {_id} = review;
+            return { ...review, id : _id };
           }),
       ];
       console.log(newAllReviews);
