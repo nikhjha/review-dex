@@ -13,6 +13,7 @@ import path from "path";
 import apiRouter from "./api";
 import Merchant from "./model/merchant";
 import cors from "koa2-cors";
+import bodyParser from "koa-bodyparser";
 
 dotenv.config();
 
@@ -225,6 +226,7 @@ app.prepare().then(async () => {
     // }
     return "*";
   }}));
+  server.use(bodyParser());
   server.use(router.allowedMethods());
   server.use(router.routes());
   server.listen(port, () => {

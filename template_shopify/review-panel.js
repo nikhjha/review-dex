@@ -69,7 +69,10 @@ function renderReviewsInfo(reviewInfo) {
       default:
         break;
     }
-    const totalPercent = reviewInfo.totalReview !== 0 ? Math.round((totalStar * 100) / reviewInfo.totalReview) : 0;
+    const totalPercent =
+      reviewInfo.totalReview !== 0
+        ? Math.round((totalStar * 100) / reviewInfo.totalReview)
+        : 0;
     bar.style.width = `${totalPercent}%`;
     total.innerText = `(${totalStar})`;
   }
@@ -97,16 +100,22 @@ function renderReviews(reviewData) {
   reviewData.forEach((reviewItem) => {
     const reviewItemDiv = document.createElement("div");
     reviewItemDiv.className = "review-item";
-    const reviewImage = document.createElement("img");
-    reviewImage.src = reviewItem.customerImg;
-    reviewImage.alt = reviewItem.name;
-    reviewItemDiv.appendChild(reviewImage);
+    if (reviewItem.customerImg) {
+      const reviewImage = document.createElement("img");
+      reviewImage.src = reviewItem.customerImg;
+      reviewImage.alt = reviewItem.name;
+      reviewItemDiv.appendChild(reviewImage);
+
+      reviewImage.addEventListener("load", () => {
+        resizeGridItem(reviewItemDiv, reviewContentDiv);
+      });
+    }
     const reviewDetailDiv = document.createElement("div");
     reviewDetailDiv.className = "review-detail";
     const para1 = document.createElement("p");
     para1.innerText = reviewItem.name;
     const para2 = document.createElement("p");
-    para2.innerText = reviewItem.created.substring(0,9);
+    para2.innerText = reviewItem.created.substring(0, 9);
     reviewDetailDiv.appendChild(para1);
     reviewDetailDiv.appendChild(para2);
     const reviewStars = document.createElement("div");
@@ -122,24 +131,25 @@ function renderReviews(reviewData) {
     reviewDetailDiv.appendChild(para3);
     const productInfo = document.createElement("div");
     productInfo.className = "review-product";
-    const productImg = document.createElement("img");
-    productImg.src = reviewItem.productImg;
-    productImg.alt = "product-pic";
+    if (reviewItem.productImg) {
+      const productImg = document.createElement("img");
+      productImg.src = reviewItem.productImg;
+      productImg.alt = "product-pic";
+      productInfo.appendChild(productImg);
+      productImg.addEventListener("load", () => {
+        resizeGridItem(reviewItemDiv, reviewContentDiv);
+      });
+    }
     const para4 = document.createElement("p");
-    para4.innerText = reviewItem.productInfo;
-    productInfo.appendChild(productImg);
+    para4.innerText = reviewItem.about === "your shop" ? reviewItem.about : reviewItem.productInfo;
+
     productInfo.appendChild(para4);
     reviewItemDiv.appendChild(reviewDetailDiv);
     reviewItemDiv.appendChild(productInfo);
     reviewContentDiv.appendChild(reviewItemDiv);
-    reviewImage.addEventListener("load", () => {
-      resizeGridItem(reviewItemDiv, reviewContentDiv);
-    });
-    productImg.addEventListener("load", () => {
-      resizeGridItem(reviewItemDiv, reviewContentDiv);
-    });
   });
 }
+
 getInfo((reviewInfo, reviewData) => {
   renderReviewsInfo(reviewInfo);
   renderReviews(reviewData);

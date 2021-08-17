@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Page,
   Modal,
@@ -8,6 +8,7 @@ import {
   Button,
 } from "@shopify/polaris";
 import ReviewTab from "./ReviewTab";
+import { AxiosContext } from "./MyProvider";
 
 export default function ReviewPage() {
   const tabs = [
@@ -33,10 +34,22 @@ export default function ReviewPage() {
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [product, setProduct] = useState("");
   const [rating, setRating] = useState(5);
-  const handleSubmit = (e) => {
+  const {axiosFetch} = useContext(AxiosContext);
+  const handleSubmit = async(e) => {
       e.preventDefault();
-      console.log("submitted");
+      try{
+        const result = await axiosFetch(async (instance) => {
+          const formData = new FormData(e.target);
+          const response = await instance.post("/api/review",{body : formData});
+          return response;
+        });
+        console.log(result);
+        console.log("submitted");
+      }catch(e){
+        console.log(e);
+      }
       setActive(false);
   }
   return (
@@ -63,22 +76,37 @@ export default function ReviewPage() {
               <TextField
                 label="Name"
                 type="text"
+                name="name"
                 value={name}
                 onChange={(newName) => {
                   setName(newName);
                 }}
               />
               <TextField
+                label="Product"
+                type="text"
+                name="about"
+                value={product}
+                onChange={(newName) => {
+                  setProduct(newName);
+                }}
+                placeholder="leave it empty if it's shop review"
+              />
+              <TextField
                 label="Email"
                 type="email"
+                name="email"
                 value={email}
                 onChange={(newEmail) => {
                   setEmail(newEmail);
                 }}
               />
+              <p>Your Images</p>
+              <input type="file" name="myImage"/>
               <TextField
                 label="Rating"
                 type="number"
+                name="rating"
                 value={rating}
                 min={1}
                 max={5}
@@ -89,6 +117,7 @@ export default function ReviewPage() {
               <TextField
                 label="Review Title"
                 type="text"
+                name="title"
                 value={title}
                 onChange={(newTitle) => {
                   setTitle(newTitle);
@@ -97,6 +126,7 @@ export default function ReviewPage() {
               <TextField
                 label="Review Body"
                 type="text"
+                name="body"
                 value={body}
                 multiline={4}
                 onChange={(newBody) => {
