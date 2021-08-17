@@ -15,6 +15,7 @@ export default function ReviewTab({ tabs }) {
   const {axiosFetch} = useContext(AxiosContext);
   const [selected, setSelected] = useState(0);
   const [allReviews, setAllReviews] = useState([[],[],[]]);
+  const [loading, setLoading] = useState(false);
   const handleTabChange = useCallback(
     (selectedTabIndex) => {
       setSelected(selectedTabIndex);
@@ -27,7 +28,7 @@ export default function ReviewTab({ tabs }) {
       const result = await axiosFetch(async (instance) => {
         const response = await instance.get("/api/reviews");
         return response;
-    });
+      });
     const reviews = result.data.reviews;
     console.log(result);
     const newAllReviews = [reviews, reviews.filter((review)=>{return review.about !== "your shop"}), reviews.filter((review)=>{return review.about === "your shop"})];
@@ -47,23 +48,47 @@ export default function ReviewTab({ tabs }) {
   const promotedBulkActions = [
     {
       content: "Publish",
-      onAction: () => console.log(selectedResources),
+      loading : loading,
+      onAction: () => {
+        setLoading(true);
+        console.log(selectedResources);
+        selectedResources.forEach(async(id) => {
+          const result = await axiosFetch(async (instance) => {
+            const response = await instance.post("/api/publish/"+id);
+            return response;
+          });
+          console.log(result);
+        });
+        setLoading(false);
+      },
     },
     {
       content: "Hide",
-      onAction: () => console.log(selectedResources),
+      loading : loading,
+      onAction: () => {
+        setLoading(true);
+        console.log(selectedResources);
+        selectedResources.forEach(async(id) => {
+          const result = await axiosFetch(async (instance) => {
+            const response = await instance.post("/api/hide/"+id);
+            return response;
+          });
+          console.log(result);
+        });
+        setLoading(false);
+      },
     },
   ];
 
   const rowMarkup = allReviews[selected].map(
     (
-      { id, name, rating, created, about, title, body, source, hidden },
+      { _id, name, rating, created, about, title, body, source, hidden },
       index
     ) => (
       <IndexTable.Row
-        id={id}
-        key={id}
-        selected={selectedResources.includes(id)}
+        id={_id}
+        key={_id}
+        selected={selectedResources.includes(_id)}
         position={index}
       >
         <IndexTable.Cell>

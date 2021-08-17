@@ -94,6 +94,21 @@ function resizeGridItem(content, grid) {
   );
   content.style.gridRowEnd = "span " + rowSpan;
 }
+function resizeGridItemWithoutImg(content, grid) {
+  rowHeight = parseInt(
+    window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
+  );
+  rowGap = parseInt(
+    window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
+  );
+  rowSpan = Math.ceil(
+    (content.querySelector(".review-product").getBoundingClientRect().height +
+      rowGap +
+      content.querySelector(".review-detail").getBoundingClientRect().height) /
+      (rowHeight + rowGap)
+  );
+  content.style.gridRowEnd = "span " + rowSpan;
+}
 
 function renderReviews(reviewData) {
   const reviewContentDiv = document.querySelector(".review-content");
@@ -147,6 +162,7 @@ function renderReviews(reviewData) {
     reviewItemDiv.appendChild(reviewDetailDiv);
     reviewItemDiv.appendChild(productInfo);
     reviewContentDiv.appendChild(reviewItemDiv);
+    resizeGridItemWithoutImg(reviewItemDiv, reviewContentDiv);
   });
 }
 

@@ -35,10 +35,12 @@ export default function ReviewPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [product, setProduct] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState("5");
   const {axiosFetch} = useContext(AxiosContext);
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async(e) => {
       e.preventDefault();
+      setLoading(true);
       try{
         const result = await axiosFetch(async (instance) => {
           const formData = new FormData(e.target);
@@ -50,6 +52,7 @@ export default function ReviewPage() {
       }catch(e){
         console.log(e);
       }
+      setLoading(false);
       setActive(false);
   }
   return (
@@ -108,15 +111,9 @@ export default function ReviewPage() {
                 type="number"
                 name="rating"
                 value={rating}
+                min={1}
+                max={5}
                 onChange={(newRating) => {
-                  if(newRating > 5){
-                    setRating(5);
-                    return;
-                  }
-                  if(newRating < 1){
-                    setRating(1);
-                    return;
-                  }
                   setRating(newRating);
                 }}
               />
@@ -139,7 +136,7 @@ export default function ReviewPage() {
                   setBody(newBody);
                 }}
               />
-              <Button primary submit>
+              <Button primary submit loading={loading}>
                 Submit
               </Button>
               

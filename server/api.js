@@ -80,9 +80,26 @@ router.get("/reviews", async(ctx) => {
     }
 });
 
+router.post("/publish/:id", (ctx) => {
+    console.log(ctx.params.id);
+    ctx.response.status = 200;
+});
+
+router.post("/hide/:id", (ctx) => {
+    console.log(ctx.params.id);
+    ctx.response.status = 200;
+});
+
 router.post("/review", upload.single("myImage") ,async(ctx) => {
     const {shop} = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
-    const {name,about,email,rating,title,body,} = ctx.request.body;
+    const {name,about,email,title,body,} = ctx.request.body;
+    let rating;
+    if (typeof(ctx.request.body.rating) === "string"){
+        rating = ctx.request.body.rating - "0";
+    }else{
+        rating = ctx.request.body.rating;
+    }
+
     const customerImg = ctx.file ? {customerImg : process.env.HOST + "/images/" + ctx.file.filename}  : {};
 
     const doc = await Merchant.findOne({shop : shop});
