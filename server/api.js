@@ -96,7 +96,8 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         hidden : false,
         source : "ADMIN",
         productInfo : about !== "" ? about : "",
-        customerImg : process.env.HOST + "/images/" + filename
+        customerImg : filename ? process.env.HOST + "/images/" + filename : null,
+        created : new Date().toISOString()
     });
     await newReview.save();
     function calculateAverage(){
@@ -107,10 +108,10 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         totalReviews : doc.totalReviews + 1,
         averageRating : calculateAverage(),
         oneStar : rating === 1 ? doc.oneStar + 1 : doc.oneStar,
-        twoStar : rating === 1 ? doc.twoStar + 1 : doc.twoStar,
-        threeStar : rating === 1 ? doc.threeStar + 1 : doc.threeStar,
-        fourStar : rating === 1 ? doc.fourStar + 1 : doc.fourStar,
-        fiveStar : rating === 1 ? doc.fiveStar + 1 : doc.fiveStar,
+        twoStar : rating === 2 ? doc.twoStar + 1 : doc.twoStar,
+        threeStar : rating === 3 ? doc.threeStar + 1 : doc.threeStar,
+        fourStar : rating === 4 ? doc.fourStar + 1 : doc.fourStar,
+        fiveStar : rating === 5 ? doc.fiveStar + 1 : doc.fiveStar,
     }
     await Merchant.updateOne({shop : shop},{ $set : {...newMerchantData}});
     ctx.response.status = 200;

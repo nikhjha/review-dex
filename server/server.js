@@ -74,7 +74,7 @@ app.prepare().then(async () => {
         if (!isMerchant) {
           const newMerchant = new Merchant({
             shop: shop,
-            avarageRating: 0,
+            averageRating: 0,
             totalReviews: 0,
             oneStar: 0,
             twoStar: 0,
