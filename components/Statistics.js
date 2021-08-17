@@ -21,7 +21,7 @@ export default function Statistics() {
             const merchant = result.data.merchant;
             setTotalReviews(merchant.totalReviews);
             setEmailSent(merchant.emailRequest);
-            setAverageRating(merchant.avarageRating);
+            setAverageRating(merchant.averageRating);
         }        
         getData();
     }, []);

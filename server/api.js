@@ -98,7 +98,21 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         productInfo : about !== "" ? about : "",
         customerImg : process.env.HOST + "/images/" + filename
     });
-    newReview.save();
+    await newReview.save();
+    function calculateAverage(){
+        const ans = doc.oneStar + 2 * doc.twoStar + 3 * doc.threeStar + 4 * doc.fourStar + 5 * doc.fiveStar + rating;
+        return ans / (doc.totalReviews + 1);
+    }
+    const newMerchantData = {
+        totalReviews : doc.totalReviews + 1,
+        averageRating : calculateAverage(),
+        oneStar : rating === 1 ? doc.oneStar + 1 : doc.oneStar,
+        twoStar : rating === 1 ? doc.twoStar + 1 : doc.twoStar,
+        threeStar : rating === 1 ? doc.threeStar + 1 : doc.threeStar,
+        fourStar : rating === 1 ? doc.fourStar + 1 : doc.fourStar,
+        fiveStar : rating === 1 ? doc.fiveStar + 1 : doc.fiveStar,
+    }
+    await Merchant.updateOne({shop : shop},{ $set : {...newMerchantData}});
     ctx.response.status = 200;
 });
 

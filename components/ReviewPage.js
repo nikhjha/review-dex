@@ -108,9 +108,15 @@ export default function ReviewPage() {
                 type="number"
                 name="rating"
                 value={rating}
-                min={1}
-                max={5}
                 onChange={(newRating) => {
+                  if(newRating > 5){
+                    setRating(5);
+                    return;
+                  }
+                  if(newRating < 1){
+                    setRating(1);
+                    return;
+                  }
                   setRating(newRating);
                 }}
               />

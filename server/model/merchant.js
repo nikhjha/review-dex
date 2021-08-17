@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 
 const merchantSchema = new Schema({
     shop : String,
-    avarageRating : Number,
+    averageRating : Number,
     totalReviews : Number,
     oneStar : Number,
     twoStar : Number,

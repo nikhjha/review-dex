@@ -24,7 +24,7 @@ const getInfo = async (callback) => {
   const { merchant, reviews } = await data.json();
   const reviewInfo = {
     totalReview: merchant.totalReviews,
-    overallRating: merchant.avarageRating,
+    overallRating: merchant.averageRating,
     total5Star: merchant.fiveStar,
     total4Star: merchant.fourStar,
     total3Star: merchant.threeStar,
