@@ -7,6 +7,7 @@ import { connect as mongoose } from "mongoose";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
+import serve from "koa-static";
 import fs from "fs";
 import path from "path";
 import apiRouter from "./api";
@@ -40,6 +41,7 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
+
   mongoose("mongodb://localhost:27017/reviewDexDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -212,6 +214,7 @@ app.prepare().then(async () => {
       await handleRequest(ctx);
     }
   });
+  server.use(serve('../public'));
   server.use(cors({origin : function(ctx) {
     // if (ctx.url === '/api/getMerchantDetail') {
     //   return '*';

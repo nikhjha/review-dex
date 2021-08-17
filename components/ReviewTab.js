@@ -5,9 +5,8 @@ import {
   IndexTable,
   useIndexResourceState,
   Heading,
-  Button,
-  ButtonGroup,
   Icon,
+  TextStyle
 } from "@shopify/polaris";
 import { StarFilledMinor, StarOutlineMinor } from "@shopify/polaris-icons";
 import { AxiosContext } from "./MyProvider";
@@ -48,11 +47,11 @@ export default function ReviewTab({ tabs }) {
   const promotedBulkActions = [
     {
       content: "Publish",
-      onAction: () => console.log("Todo: implement bulk edit"),
+      onAction: () => console.log(selectedResources),
     },
     {
       content: "Hide",
-      onAction: () => console.log("Todo: implement bulk edit"),
+      onAction: () => console.log(selectedResources),
     },
   ];
 
@@ -96,7 +95,7 @@ export default function ReviewTab({ tabs }) {
           </div>
           
         </IndexTable.Cell>
-        <IndexTable.Cell>{created} days ago</IndexTable.Cell>
+        <IndexTable.Cell>{created.substring(0,9)}</IndexTable.Cell>
         <IndexTable.Cell>
           {name} wrote a review about {about}
           <Heading>{title}</Heading>
@@ -104,14 +103,7 @@ export default function ReviewTab({ tabs }) {
         </IndexTable.Cell>
         <IndexTable.Cell>{source}</IndexTable.Cell>
         <IndexTable.Cell>
-          <ButtonGroup>
-            <Button disabled={!hidden} primary={hidden}>
-              Hidden
-            </Button>
-            <Button onClick={() => {}} disabled={hidden} primary={!hidden}>
-              Published
-            </Button>
-          </ButtonGroup>
+          <TextStyle variation={hidden ? "negative" : "positive"}>{hidden ? "HIDDEN" : "PUBLISHED"}</TextStyle>
         </IndexTable.Cell>
       </IndexTable.Row>
     )

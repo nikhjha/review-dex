@@ -106,7 +106,7 @@ function renderReviews(reviewData) {
     const para1 = document.createElement("p");
     para1.innerText = reviewItem.name;
     const para2 = document.createElement("p");
-    para2.innerText = reviewItem.created;
+    para2.innerText = reviewItem.created.substring(0,9);
     reviewDetailDiv.appendChild(para1);
     reviewDetailDiv.appendChild(para2);
     const reviewStars = document.createElement("div");
