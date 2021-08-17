@@ -214,7 +214,11 @@ app.prepare().then(async () => {
       await handleRequest(ctx);
     }
   });
-  server.use(serve('../public'));
+  server.use(serve(path.resolve(
+    "server",
+    "..",
+    "public"
+  )));
   server.use(cors({origin : function(ctx) {
     // if (ctx.url === '/api/getMerchantDetail') {
     //   return '*';
