@@ -42,7 +42,7 @@ export default function ReviewPage() {
       try{
         const result = await axiosFetch(async (instance) => {
           const formData = new FormData(e.target);
-          const response = await instance.post("/api/review",{body : formData});
+          const response = await instance.post("/api/review",formData);
           return response;
         });
         console.log(result);

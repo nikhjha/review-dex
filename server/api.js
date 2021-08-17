@@ -81,7 +81,7 @@ router.get("/reviews", async(ctx) => {
 });
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
-    console.log(ctx.file,ctx.request.body);
+    console.log(ctx.req.file,ctx.req.body);
 });
 
 

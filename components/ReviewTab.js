@@ -95,7 +95,7 @@ export default function ReviewTab({ tabs }) {
           </div>
           
         </IndexTable.Cell>
-        <IndexTable.Cell>{created.substring(0,9)}</IndexTable.Cell>
+        <IndexTable.Cell>{created.substring(0,10)}</IndexTable.Cell>
         <IndexTable.Cell>
           {name} wrote a review about {about}
           <Heading>{title}</Heading>
