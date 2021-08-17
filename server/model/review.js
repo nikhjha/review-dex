@@ -7,6 +7,7 @@ const reviewSchema = new Schema({
     name: String,
     about: String,
     title: String,
+    email: String,
     body: String,
     source: String,
     hidden: Boolean,

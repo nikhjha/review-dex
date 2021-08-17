@@ -81,7 +81,25 @@ router.get("/reviews", async(ctx) => {
 });
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
-    console.log(ctx.file,ctx.request.body);
+    const {shop} = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    const {name,about,email,rating,title,body,} = ctx.request.body;
+    const {filename} = ctx.file;
+    const doc = await Merchant.findOne({shop : shop});
+    const newReview = new Review({
+        merchantID : doc.id,
+        name,
+        email,
+        rating,
+        title,
+        body,
+        about : about === "" ? "your shop" : "your product",
+        hidden : false,
+        source : "ADMIN",
+        productInfo : about !== "" ? about : "",
+        customerImg : process.env.HOST + "/images/" + filename
+    });
+    newReview.save();
+    ctx.response.status = 200;
 });
 
 
