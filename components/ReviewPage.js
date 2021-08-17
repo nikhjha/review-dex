@@ -26,12 +26,7 @@ export default function ReviewPage() {
       id: "shop-reviews-1",
       content: "Shop Reviews",
       panelID: "shop-reviews-content-1",
-    },
-    {
-      id: "archived-reviews-1",
-      content: "Archived Reviews",
-      panelID: "archived-reviews-content-1",
-    },
+    }
   ];
   const [active, setActive] = useState(false);
   const [name, setName] = useState("");

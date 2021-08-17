@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import {
   Card,
   Tabs,
@@ -10,46 +10,40 @@ import {
   Icon,
 } from "@shopify/polaris";
 import { StarFilledMinor, StarOutlineMinor } from "@shopify/polaris-icons";
+import { AxiosContext } from "./MyProvider";
 
 export default function ReviewTab({ tabs }) {
+  const {axiosFetch} = useContext(AxiosContext);
   const [selected, setSelected] = useState(0);
-
+  const [allReviews, setAllReviews] = useState([[],[],[]]);
   const handleTabChange = useCallback(
-    (selectedTabIndex) => setSelected(selectedTabIndex),
+    (selectedTabIndex) => {
+      setSelected(selectedTabIndex);
+    },
     []
   );
+
+  useEffect(() => {
+    async function getData(){
+      const result = await axiosFetch(async (instance) => {
+        const response = await instance.get("/api/reviews");
+        return response;
+    });
+    const reviews = result.data.reviews;
+    console.log(result);
+    const newAllReviews = [reviews, reviews.filter((review)=>{return review.about !== "your shop"}), reviews.filter((review)=>{return review.about === "your shop"})];
+    setAllReviews(newAllReviews);
+    };
+    getData();
+  },[])
 
   const resourceName = {
     singular: "review",
     plural: "reviews",
   };
-  const reviews = [
-    {
-      id: "3417",
-      rating: 5,
-      created: 14,
-      name: "Nikhil",
-      about: "your shop",
-      title: "bdlnsdkdnks",
-      body: "bcdcndnds",
-      source: "ADMIN",
-      hidden: false,
-    },
-    {
-      id: "2567",
-      rating: 3,
-      created: 14,
-      name: "Nikhil",
-      about: "your shop",
-      title: "bdlnsdkdnks",
-      body: "bcdcndnds",
-      source: "ADMIN",
-      hidden: false,
-    },
-  ];
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(reviews);
+    useIndexResourceState(allReviews[selected]);
 
   const promotedBulkActions = [
     {
@@ -62,7 +56,7 @@ export default function ReviewTab({ tabs }) {
     },
   ];
 
-  const rowMarkup = reviews.map(
+  const rowMarkup = allReviews[selected].map(
     (
       { id, name, rating, created, about, title, body, source, hidden },
       index
@@ -128,7 +122,7 @@ export default function ReviewTab({ tabs }) {
         <Card.Section>
           <IndexTable
             resourceName={resourceName}
-            itemCount={reviews.length}
+            itemCount={allReviews[selected].length}
             selectedItemsCount={
               allResourcesSelected ? "All" : selectedResources.length
             }

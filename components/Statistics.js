@@ -18,7 +18,6 @@ export default function Statistics() {
                 const response = await instance.get("/api/merchant");
                 return response;
             });
-            console.log(result);
             const merchant = result.data.merchant;
             setTotalReviews(merchant.totalReviews);
             setEmailSent(merchant.emailRequest);
