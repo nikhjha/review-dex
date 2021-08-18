@@ -19,13 +19,7 @@ export default function RequestTab({tabs}) {
     plural: "orders",
   };
   const orders = [
-    {
-      id: "3417",
-      name : "crimson sea",
-      fullfilled: "13 Aug '21",
-      buyer : 'Anonymus',
-      status : 'alncn@ancan.com'
-    }
+    
   ];
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
