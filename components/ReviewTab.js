@@ -78,6 +78,7 @@ export default function ReviewTab({ tabs }) {
             return response;
           });
         });
+        handleSelectionChange("page",false,undefined);
         setLoading(false);
       },
     },
@@ -93,6 +94,7 @@ export default function ReviewTab({ tabs }) {
             return response;
           });
         });
+        handleSelectionChange("page",false,undefined);
         setLoading(false);
       },
     },
