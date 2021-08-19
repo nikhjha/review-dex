@@ -57,7 +57,7 @@ export default function WriteReview({ active, setActive }) {
               value={product}
               style={{ display: "none" }}
             />
-            {/* <Button onClick={setProductPicker(true)}>Pick Product</Button> */}
+            <Button onClick={()=>{setProductPicker(true)}}>Pick Product</Button>
             <TextField
               label="Email"
               type="email"
@@ -108,7 +108,7 @@ export default function WriteReview({ active, setActive }) {
     </Modal>
     <ResourcePicker
     resourceType="Product"
-    open={active}
+    open={productPicker}
     selectMultiple={false}
     onCancel={() => {
       setProductPicker(false);
