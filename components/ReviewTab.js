@@ -102,7 +102,7 @@ export default function ReviewTab({ tabs }) {
 
   const rowMarkup = allReviews[selected].map(
     (
-      { id, name, rating, created, about, title, body, source, hidden },
+      { id, name, rating, created, about, title, body, source, hidden, productInfo },
       index
     ) => (
       <IndexTable.Row
@@ -142,7 +142,7 @@ export default function ReviewTab({ tabs }) {
         </IndexTable.Cell>
         <IndexTable.Cell>{created.substring(0, 10)}</IndexTable.Cell>
         <IndexTable.Cell>
-          {name} wrote a review about {about}
+          {name} wrote a review about {about === "your shop" ? about : productInfo}
           <Heading>{title}</Heading>
           {body}
         </IndexTable.Cell>

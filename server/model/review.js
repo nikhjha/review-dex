@@ -11,8 +11,7 @@ const reviewSchema = new Schema({
     body: String,
     source: String,
     hidden: Boolean,
-    customerImg : String,
-    productImg : String,
+    customerImg : [String],
     productInfo : String,
 });
 

@@ -117,7 +117,7 @@ function renderReviews(reviewData) {
     reviewItemDiv.className = "review-item";
     if (reviewItem.customerImg) {
       const reviewImage = document.createElement("img");
-      reviewImage.src = reviewItem.customerImg;
+      reviewImage.src = reviewItem.customerImg[0];
       reviewImage.alt = reviewItem.name;
       reviewItemDiv.appendChild(reviewImage);
 

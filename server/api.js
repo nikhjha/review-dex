@@ -25,7 +25,6 @@ function checkFileType(file, cb){
     // Allowed ext
     const filetypes = /jpeg|jpg|png|gif/;
     // Check ext
-    console.log(path.extname(file.originalname).toLowerCase());
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
     const mimetype = filetypes.test(file.mimetype);
@@ -116,7 +115,7 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         rating = ctx.request.body.rating;
     }
 
-    const customerImg = ctx.file ? {customerImg : process.env.HOST + "/images/" + ctx.file.filename}  : {};
+    const customerImg = ctx.file ? {customerImg : [process.env.HOST + "/images/" + ctx.file.filename]}  : {};
 
     const doc = await Merchant.findOne({shop : shop});
     const newReview = new Review({
