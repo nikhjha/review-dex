@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Modal, Form, FormLayout, Button } from "@shopify/polaris";
 import { AxiosContext } from "./MyProvider";
-import { Header } from "@shopify/polaris";
+import { Heading } from "@shopify/polaris";
 
 export default function ImportReview({ active, setActive }) {
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function ImportReview({ active, setActive }) {
       <Modal.Section>
         <Form onSubmit={handleSubmit}>
           <FormLayout>
-            <Header>You can upload reviews as CSV format.</Header>
+            <Heading>You can upload reviews as CSV format.</Heading>
 
             <input type="file" name="myCSV" />
 
