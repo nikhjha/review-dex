@@ -4,6 +4,8 @@ import Shopify from "@shopify/shopify-api";
 import Merchant from "./model/merchant";
 import Review from "./model/review";
 import path from "path";
+import csvRouter from "./api/csv";
+
 
 const router =  Router();
 
@@ -161,6 +163,10 @@ router.get("/merchant", async(ctx) => {
     ctx.response.body = e; 
     }
 });
+
+router.use("/import-reviews", 
+    csvRouter.routes()
+);
 
 export default router;
 
