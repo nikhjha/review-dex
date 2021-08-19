@@ -9,7 +9,7 @@ export default function WriteReview({ active, setActive }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [product, setProduct] = useState("");
-  const [productPicker, setProductPicker] = useState(true);
+  const [productPicker, setProductPicker] = useState(false);
   const [rating, setRating] = useState("5");
   const { axiosFetch } = useContext(AxiosContext);
   const [loading, setLoading] = useState(false);
@@ -108,7 +108,8 @@ export default function WriteReview({ active, setActive }) {
     </Modal>
     <ResourcePicker
     resourceType="Product"
-    open={productPicker}
+    open={active}
+    selectMultiple={false}
     onCancel={() => {
       setProductPicker(false);
     }}
