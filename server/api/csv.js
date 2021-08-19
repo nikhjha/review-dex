@@ -127,7 +127,9 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     fourStar: doc.fourStar + fourStar,
                     fiveStar: doc.fiveStar + fiveStar,
                 }
-                await Merchant.updateOne({ shop: shop }, { $set: { ...newMerchantData } });
+                Merchant.updateOne({ shop: shop }, { $set: { ...newMerchantData }},null,(err,res)=>{
+                    console.log(res,err);
+                });
             });
         ctx.response.status = 200;
     }
