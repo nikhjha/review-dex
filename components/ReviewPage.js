@@ -43,7 +43,7 @@ export default function ReviewPage() {
         {
           content: 'Import Reviews',
           onAction : () =>{
-            setImportReview(true);
+            setActiveImportReview(true);
           }
         },
       ]}
