@@ -142,9 +142,11 @@ export default function ReviewTab({ tabs }) {
         </IndexTable.Cell>
         <IndexTable.Cell>{created.substring(0, 10)}</IndexTable.Cell>
         <IndexTable.Cell>
-          {name} wrote a review about {about === "your shop" ? about : productInfo}
+          <div style={{width : '500px'}}>
+          {name} wrote a review about {about}
           <Heading>{title}</Heading>
           {body}
+          </div>
         </IndexTable.Cell>
         <IndexTable.Cell>{source}</IndexTable.Cell>
         <IndexTable.Cell>

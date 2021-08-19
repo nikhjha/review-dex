@@ -62,7 +62,8 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
         let fiveStar = 0;
         function calculateAverage(){
             const ans = doc.oneStar + 2 * doc.twoStar + 3 * doc.threeStar + 4 * doc.fourStar + 5 * doc.fiveStar + oneStar + 2 * twoStar + 3 * threeStar + 4 * fourStar + 5 * fiveStar;
-            return ans / (doc.totalReviews + totalReviews);
+            const answer =  ans / (doc.totalReviews + totalReviews);
+            return answer.toFixed(2);
         }
         fs.createReadStream(filePath)
             .pipe(csv.parse({ headers: true }))
@@ -128,7 +129,6 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     fiveStar: doc.fiveStar + fiveStar,
                 }
                 Merchant.updateOne({ shop: shop }, { $set: { ...newMerchantData }},null,(err,res)=>{
-                    console.log(res,err);
                 });
             });
         ctx.response.status = 200;

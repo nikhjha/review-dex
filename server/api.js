@@ -135,7 +135,8 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
     await newReview.save();
     function calculateAverage(){
         const ans = doc.oneStar + 2 * doc.twoStar + 3 * doc.threeStar + 4 * doc.fourStar + 5 * doc.fiveStar + rating;
-        return ans / (doc.totalReviews + 1);
+        const answer =  ans / (doc.totalReviews + 1);
+        return answer.toFixed(2);
     }
     const newMerchantData = {
         totalReviews : doc.totalReviews + 1,
