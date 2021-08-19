@@ -31,6 +31,7 @@ export default function WriteReview({ active, setActive }) {
     setActive(false);
   };
   return (
+    <>
     <Modal
       open={active}
       onClose={() => {
@@ -57,16 +58,6 @@ export default function WriteReview({ active, setActive }) {
               style={{ display: "none" }}
             />
             <Button onClick={setProductPicker(true)}>Pick Product</Button>
-            <ResourcePicker
-              resourceType="Product"
-              open={productPicker}
-              onCancel={() => {
-                setProductPicker(false);
-              }}
-              onSelection={(selectPayload) => {
-                console.log(selectPayload);
-              }}
-            />
             <TextField
               label="Email"
               type="email"
@@ -115,5 +106,16 @@ export default function WriteReview({ active, setActive }) {
         </Form>
       </Modal.Section>
     </Modal>
+    <ResourcePicker
+    resourceType="Product"
+    open={productPicker}
+    onCancel={() => {
+      setProductPicker(false);
+    }}
+    onSelection={(selectPayload) => {
+      console.log(selectPayload);
+    }}
+  />
+  </>
   );
 }
