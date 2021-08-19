@@ -1,8 +1,8 @@
 import Router from "koa-router";
 import multer from "@koa/multer"
 import Shopify from "@shopify/shopify-api";
-import Merchant from "./model/merchant";
-import Review from "./model/review";
+import Merchant from "../model/merchant";
+import Review from "../model/review";
 import * as csv from 'fast-csv';
 import * as fs from 'fs';
 import * as path from 'path';
