@@ -29,6 +29,7 @@ function checkFileType(file, cb){
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
     const mimetype = filetypes.test(file.mimetype);
+    console.log(extname,mimetype);
     if(mimetype && extname){
     return cb(null,true);
     } else {
