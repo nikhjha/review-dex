@@ -51,13 +51,13 @@ export default function WriteReview({ active, setActive }) {
                 setName(newName);
               }}
             />
-            {/* <input
+            <input
               name="about"
               type="text"
               value={product}
               style={{ display: "none" }}
             />
-            <Button onClick={setProductPicker(true)}>Pick Product</Button> */}
+            {/* <Button onClick={setProductPicker(true)}>Pick Product</Button> */}
             <TextField
               label="Email"
               type="email"
