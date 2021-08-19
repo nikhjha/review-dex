@@ -61,3 +61,5 @@ router.post("/", upload.single("myCSV") ,async(ctx) => {
     ctx.response.status = 200;
     }
 });
+
+export default router;
