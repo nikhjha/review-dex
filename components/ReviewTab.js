@@ -112,7 +112,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
         selected={selectedResources.includes(id)}
         position={index}
       >
-        <IndexTable.Cell>
+        <IndexTable.Cell >
           <div style={{ display: "flex" }}>
             {rating >= 1 ? (
               <Icon source={StarFilledMinor} color="warning" />
@@ -142,7 +142,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
           </div>
         </IndexTable.Cell>
         <IndexTable.Cell>{created.substring(0, 10)}</IndexTable.Cell>
-        <IndexTable.Cell>
+        <IndexTable.Cell flush>
           <div style={{width : '400px', overflowX : 'hidden'}}>
           <p style={{width : "100%"}}>{name} wrote a review about {about}</p>
           <Heading>{title}</Heading>
