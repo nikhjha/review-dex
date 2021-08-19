@@ -9,7 +9,7 @@ export default function WriteReview({ active, setActive }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [product, setProduct] = useState("");
-  const [productPicker, setProductPicker] = useState(false);
+  const [productPicker, setProductPicker] = useState(true);
   const [rating, setRating] = useState("5");
   const { axiosFetch } = useContext(AxiosContext);
   const [loading, setLoading] = useState(false);
