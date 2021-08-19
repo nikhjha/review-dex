@@ -115,7 +115,7 @@ function renderReviews(reviewData) {
   reviewData.forEach((reviewItem) => {
     const reviewItemDiv = document.createElement("div");
     reviewItemDiv.className = "review-item";
-    if (reviewItem.customerImg[0] === "") {
+    if (reviewItem.customerImg[0] !== "") {
       const reviewImage = document.createElement("img");
       reviewImage.src = reviewItem.customerImg[0];
       reviewImage.alt = reviewItem.name;
