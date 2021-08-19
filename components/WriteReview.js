@@ -124,8 +124,9 @@ export default function WriteReview({ active, setActive }) {
     }}
     onSelection={(selectPayload) => {
       setProduct(selectPayload.selection[0].handle);
-      setProductID(selectPayload.selection[0].id.split("/")[-1]);
-      console.log(selectPayload.selection[0].id.split("/")[-1]);
+      const id = selectPayload.selection[0].id.split("/")
+      setProductID(id[id.length - 1]);
+      console.log(id[id.length - 1]);
     }}
   />
   </>
