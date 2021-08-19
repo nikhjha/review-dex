@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {
+  Loading,
   Page,
 } from "@shopify/polaris";
 import ReviewTab from "./ReviewTab";
@@ -10,6 +11,7 @@ export default function ReviewPage() {
 
   const [activeWriteReview, setActiveWriteReview] = useState(false);
   const [activeImportReview, setActiveImportReview] = useState(false);
+  const [pageLoading,setPageLoading] = useState(true);
 
   const tabs = [
     {
@@ -48,7 +50,8 @@ export default function ReviewPage() {
         },
       ]}
     >
-      <ReviewTab tabs={tabs} />
+      {pageLoading && <Loading />}
+      <ReviewTab tabs={tabs} setPageLoading={setPageLoading}/>
       <WriteReview active={activeWriteReview} setActive={setActiveWriteReview}/>    
       <ImportReview active={activeImportReview} setActive={setActiveImportReview}/> 
     </Page>

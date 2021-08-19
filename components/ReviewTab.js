@@ -11,7 +11,7 @@ import {
 import { StarFilledMinor, StarOutlineMinor } from "@shopify/polaris-icons";
 import { AxiosContext } from "./MyProvider";
 
-export default function ReviewTab({ tabs }) {
+export default function ReviewTab({ tabs , setPageLoading }) {
   const { axiosFetch } = useContext(AxiosContext);
   const [selected, setSelected] = useState(0);
   const [allReviews, setAllReviews] = useState([[], [], []]);
@@ -50,6 +50,7 @@ export default function ReviewTab({ tabs }) {
           }),
       ];
       setAllReviews(newAllReviews);
+      setPageLoading(false);
     }
     getData();
   }, []);
@@ -102,7 +103,7 @@ export default function ReviewTab({ tabs }) {
 
   const rowMarkup = allReviews[selected].map(
     (
-      { id, name, rating, created, about, title, body, source, hidden, productInfo },
+      { id, name, rating, created, about, title, body, source, hidden },
       index
     ) => (
       <IndexTable.Row
@@ -142,10 +143,10 @@ export default function ReviewTab({ tabs }) {
         </IndexTable.Cell>
         <IndexTable.Cell>{created.substring(0, 10)}</IndexTable.Cell>
         <IndexTable.Cell>
-          <div style={{width : '500px'}}>
-          {name} wrote a review about {about}
+          <div style={{width : '400px'}}>
+          <p>{name} wrote a review about {about}</p>
           <Heading>{title}</Heading>
-          {body}
+          <p>{body}</p>
           </div>
         </IndexTable.Cell>
         <IndexTable.Cell>{source}</IndexTable.Cell>
