@@ -107,7 +107,7 @@ router.post("/hide/:id", async(ctx) => {
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
     const {shop} = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
-    const {name,about,email,title,body,} = ctx.request.body;
+    const {name,about,email,title,body,product_id} = ctx.request.body;
     let rating;
     if (typeof(ctx.request.body.rating) === "string"){
         rating = ctx.request.body.rating - "0";
@@ -125,12 +125,12 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         rating,
         title,
         body,
-        about : about === "" ? "your shop" : "your product",
+        about : about === "" ? "your shop" : about,
         hidden : false,
         source : "ADMIN",
-        productInfo : about !== "" ? about : "",
+        productInfo : product_id,
         ...customerImg,
-        created : new Date().toISOString()
+        created : new Date().toISOString(),
     });
     await newReview.save();
     function calculateAverage(){
