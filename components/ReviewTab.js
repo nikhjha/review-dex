@@ -142,11 +142,11 @@ export default function ReviewTab({ tabs , setPageLoading }) {
           </div>
         </IndexTable.Cell>
         <IndexTable.Cell>{created.substring(0, 10)}</IndexTable.Cell>
-        <IndexTable.Cell flush>
-          <div style={{width : '400px', overflowX : 'hidden'}}>
-          <p style={{width : "100%"}}>{name} wrote a review about {about}</p>
+        <IndexTable.Cell>
+          <div  style={{whiteSpace : "normal", width : '400px'}}>
+          <p>{name} wrote a review about {about}</p>
           <Heading>{title}</Heading>
-          <p style={{width : "100%"}}>{body}</p>
+          <p>{body}</p>
           </div>
         </IndexTable.Cell>
         <IndexTable.Cell>{source}</IndexTable.Cell>
