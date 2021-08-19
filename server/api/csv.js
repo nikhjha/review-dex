@@ -75,9 +75,9 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                 const { reviewer_name, review_date, source, title, body, reviewer_email, product_id, product_handle, picture_urls } = row;
                 let rating;
                 if (typeof (row.rating) === "string") {
-                    rating = ctx.request.body.rating - "0";
+                    rating = row.rating - "0";
                 } else {
-                    rating = ctx.request.body.rating;
+                    rating = row.rating;
                 }
                 switch (rating) {
                     case 5:
