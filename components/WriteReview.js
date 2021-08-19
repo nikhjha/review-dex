@@ -106,7 +106,7 @@ export default function WriteReview({ active, setActive }) {
         </Form>
       </Modal.Section>
     </Modal>
-    {/* <ResourcePicker
+    <ResourcePicker
     resourceType="Product"
     open={productPicker}
     onCancel={() => {
@@ -115,7 +115,7 @@ export default function WriteReview({ active, setActive }) {
     onSelection={(selectPayload) => {
       console.log(selectPayload);
     }}
-  /> */}
+  />
   </>
   );
 }
