@@ -37,9 +37,8 @@ const download = async(url, path) => {
   })
 }
 const generateName = (url) =>{
-    const img = url.split("/");
-    const imgExt = img[img.length - 1].split(".");
-    const imgName = "myImage" + imgExt[0] + Date.now() + imgExt[1];
+    const filename = path.basename(url);
+    const imgName = "myImage"  + Date.now() + filename;
     return imgName;
 }
 const downloadImg = async(url,imgName) =>{
@@ -131,7 +130,7 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                 }
                 const customerImgs = picture_urls.split(",");
                 let customerImg = [];
-                if(customerImgs !== [""]){
+                if(customerImgs !== [""] || customerImgs !== ['']){
                     customerImgs.forEach((img) =>{
                         const imgName = generateName(img);
                         customerImg.push(process.env.HOST + "/images/" + imgName);
