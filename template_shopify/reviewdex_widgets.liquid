@@ -1,0 +1,120 @@
+{% if widget_type == 'review_dex_all_review_panel' %}
+<div id="review_dex_widget_info" class="{{shop.domain}} {{widget_type}}"></div>
+{% endif %}
+{% if widget_type == 'review_dex_review_panel' %}
+<div id="review_dex_widget_info" class="{{shop.domain}} {{widget_type}} {{product.id}}"></div>
+{% endif %}
+<div class="review_dex_section">
+        <h1 class="review_dex_header">REVIEWS</h1>
+        <p class="review_dex_description">
+          Here's What some of Our Happy Customers Have to Say About Us!
+        </p>
+        <div class="review_dex_container">
+          <div class="review_dex_nav">
+            <div class="review_dex_stars">
+              <input name="rating" type="number" value="5"/>
+            </div>
+            <p id="review_dex_total_reviews"></p>
+            <button id="review_dex_dropdown_btn"><span class="material-icons-outlined "> expand_more </span></button>
+            <button id="review_dex_write_review_btn">Write Review</button>
+            <button id="review_dex_sort_btn"><span class="material-icons-outlined "> tune </span></button>
+            <div id="review_dex_dropdown">
+              <p><span class="material-icons-outlined"> star </span></p>
+              <div class="review_dex_merchant_info">
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="5"/>
+                </div>
+                <div class="review_dex_progress_bar" id="review_dex_5_progress_bar">
+                  <div></div>
+                </div>
+                <p class="review_dex_review_count" id="review_dex_5_review_count"></p>
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="4"/>
+                </div>
+                <div class="review_dex_progress_bar" id="review_dex_4_progress_bar">
+                  <div></div>
+                </div>
+                <p class="review_dex_review_count" id="review_dex_4_review_count"></p>
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="3"/>
+                </div>
+                <div class="review_dex_progress_bar" id="review_dex_3_progress_bar">
+                  <div></div>
+                </div>
+                <p class="review_dex_review_count" id="review_dex_3_review_count"></p>
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="2"/>
+                </div>
+                <div class="review_dex_progress_bar" id="review_dex_2_progress_bar">
+                  <div></div>
+                </div>
+                <p class="review_dex_review_count" id="review_dex_2_review_count"></p>
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="1"/>
+                </div>
+                <div class="review_dex_progress_bar" id="review_dex_1_progress_bar">
+                  <div></div>
+                </div>
+                <p class="review_dex_review_count" id="review_dex_1_review_count"></p>
+              </div>
+            </div>
+          </div>
+          <div class="review_dex_content">
+          </div>
+        </div>
+      </div>
+      <div class="review_dex_modal">
+        <div class="review_dex_modal_container">
+          <button id="review_dex_model_cls_btn"><span class="material-icons "> close </span></button>
+          <div class="review_dex_model_img">
+            <img src="" alt=""/>
+          </div>
+          <div class="review_dex_model_content">
+            <div class="review_dex_model_content_header">
+              <div class="review_dex_model_content_header_1">
+                <p></p>
+                <div class="review_dex_stars">
+                  <input name="rating" type="number" value="1"/>
+                </div>
+              </div>
+              <div class="review_dex_model_content_header_2">
+                <p></p>
+                <p></p>
+              </div>
+            </div>
+            <p></p>
+            <div class="review_dex_model_content_footer">
+              <div class="review_dex_product">
+                <img src="" alt=""/>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review_dex_write_modal" >
+        <div class="review_dex_write_modal_container">
+          <button id="review_dex_write_model_cls_btn"><span class="material-icons "> close </span></button>
+          <form method="POST" enctype="multipart/form-data" action="/api/review">
+            <div class="review_dex_form">
+              <p>Name</p>
+              <input type="text" name="name" required/>
+              <p>Email</p>
+              <input type="email" name="email" required/>
+              <p>Your Image</p>
+              <input type="file" name="myImage" />
+              <p>Rating</p>
+              <input type="number" name="rating" min="1" max="5" required/>
+              <p>Title</p>
+              <input type="text" name="title" />
+              <p>Body</p>
+              <textarea rows = "5" cols = "60" name = "body">
+             </textarea>
+             <input type="text" name="about" value="{{ product.handle }}" style="display: none;"/>
+             <input type="text" name="product_id" value="{{ product.id }}" style="display: none;"/>
+             <input type="text" name="product_img" value="{{ product.featured_image.src }}" style="display: none;"/>
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+</div>

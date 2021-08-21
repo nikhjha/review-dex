@@ -10,6 +10,7 @@ export default function WriteReview({ active, setActive }) {
   const [body, setBody] = useState("");
   const [product, setProduct] = useState("");
   const [productID, setProductID] = useState("");
+  const [productImg, setProductImg] = useState("");
   const [productPicker, setProductPicker] = useState(false);
   const [rating, setRating] = useState("5");
   const { axiosFetch } = useContext(AxiosContext);
@@ -67,6 +68,12 @@ export default function WriteReview({ active, setActive }) {
             <p>If shop review dont select product</p>
             <Button onClick={()=>{setProductPicker(true)}}>Pick Product</Button>
             <p>{product}</p>
+            <input
+              name="product_img"
+              type="text"
+              value={productImg}
+              style={{ display: "none" }}
+            />
             <TextField
               label="Email"
               type="email"
@@ -127,6 +134,8 @@ export default function WriteReview({ active, setActive }) {
       const id = selectPayload.selection[0].id.split("/")
       setProductPicker(false);
       setProductID(id[id.length - 1]);
+      console.log(selectPayload.selection[0]);
+      setProductImg("");
     }}
   />
   </>

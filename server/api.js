@@ -5,6 +5,7 @@ import Merchant from "./model/merchant";
 import Review from "./model/review";
 import path from "path";
 import csvRouter from "./api/csv";
+import productRouter from "./api/product";
 
 
 const router =  Router();
@@ -45,7 +46,7 @@ const upload = multer({
 
 
 router.get("/getMerchantDetail/:id",async(ctx)=>{
-    const shop = ctx.params.id;
+    const shop = ctx.request.query.id;
     try {
         const doc = await Merchant.findOne({shop : shop});
     if(doc.totalReviews === 0){
@@ -107,7 +108,7 @@ router.post("/hide/:id", async(ctx) => {
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
     const {shop} = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
-    const {name,about,email,title,body,product_id} = ctx.request.body;
+    const {name,about,email,title,body,product_id,product_img} = ctx.request.body;
     let rating;
     if (typeof(ctx.request.body.rating) === "string"){
         rating = ctx.request.body.rating - "0";
@@ -116,6 +117,7 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
     }
 
     const customerImg = ctx.file ? {customerImg : [process.env.HOST + "/images/" + ctx.file.filename]}  : {};
+    
 
     const doc = await Merchant.findOne({shop : shop});
     const newReview = new Review({
@@ -129,6 +131,7 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         hidden : false,
         source : "ADMIN",
         productInfo : product_id,
+        productImg : about !== "" ? product_img : "",
         ...customerImg,
         created : new Date().toISOString(),
     });
@@ -168,6 +171,8 @@ router.get("/merchant", async(ctx) => {
 router.use("/import-reviews", 
     csvRouter.routes()
 );
+
+router.use("/products", productRouter.routes());
 
 export default router;
 

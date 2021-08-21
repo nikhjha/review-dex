@@ -13,6 +13,7 @@ const reviewSchema = new Schema({
     hidden: Boolean,
     customerImg : [String],
     productInfo : String,
+    productImg : String
 });
 
 const Review = model("Review", reviewSchema);

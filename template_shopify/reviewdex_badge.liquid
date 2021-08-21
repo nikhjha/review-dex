@@ -1,0 +1,21 @@
+
+<div  class=" review_dex_badge {{shop.domain}} {{  widget_type }} {{ product.id }}">
+    {% if widget_type == 'review_dex_link_badge' %}
+    <div class="review_dex_product_badge">
+        <div class="review_dex_stars">
+            <input name="rating" type="number" value="5"/>
+        </div>
+        <span>
+        </span>
+    </div>
+    {% endif %}
+    {% if widget_type == 'review_dex_badge' %}
+    <div class="review_dex_product_badge">
+        <div class="review_dex_stars">
+            <input name="rating" type="number" value="5"/>
+        </div>
+        <span>
+        </span>
+    </div>
+    {% endif %}
+</div>
