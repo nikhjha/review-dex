@@ -43,7 +43,6 @@ const generateName = (url) =>{
 }
 const downloadImg = async(url,imgName) =>{
     const imgPath = path.resolve("server", "..", "public", "images") + "/"+ imgName;
-    console.log(imgPath);
     const response = await download(url,imgPath);
     return response;
 }
