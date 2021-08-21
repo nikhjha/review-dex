@@ -24,7 +24,6 @@ export default function WriteReview({ active, setActive }) {
         const response = await instance.post("/api/review", formData);
         return response;
       });
-      console.log(result);
       console.log("submitted");
     } catch (e) {
       console.log(e);

@@ -45,8 +45,8 @@ class ReviewPanel {
         const url = this.link + "/api/products?shop=" + shop + "&product_id="+productID + "&with_reviews=false";
         const data = await fetch(url);
         const { product } = await data.json();
-        badge.querySelector(".review_dex_stars > input").value = product.totalReviews;
-        badge.querySelector("span").innerHTML = product.averageRating;
+        badge.querySelector(".review_dex_stars > input").value = Math.round(product.averageRating);
+        badge.querySelector(".review_dex_product_badge > span").innerHTML = product.totalReviews;
       });
       this.setStars();
     }
@@ -143,7 +143,7 @@ class ReviewPanel {
       return;
     }
     if(this.productReview){
-      const url = this.link + "/api/products?shop=" + shop + "&product_id="+productID + "&with_reviews=true";
+      const url = this.link + "/api/products?shop=" + this.shop + "&product_id="+ this.productID + "&with_reviews=true";
       const data = await fetch(url);
       const { product, reviews } = await data.json();
       const reviewInfo = {
@@ -173,6 +173,15 @@ class ReviewPanel {
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
     }
+    const writeForm = document.getElementById("review_dex_write_form");
+    writeForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
+      console.log(response);
+      const modalDiv = document.querySelector(".review_dex_write_modal");
+      modalDiv.style.display = "none";
+    });
     this.renderReviewsInfo();
     this.renderReviews();
     this.setStars();

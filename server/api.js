@@ -107,7 +107,17 @@ router.post("/hide/:id", async(ctx) => {
 });
 
 router.post("/review", upload.single("myImage") ,async(ctx) => {
-    const {shop} = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    let shop;
+    let source;
+    if(!ctx.request.query.shop){
+        const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+        shop = session.shop;
+        source = "ADMIN";
+    }else{
+        shop = ctx.request.query.shop;
+        source = "WEB";
+    }
+    
     const {name,about,email,title,body,product_id,product_img} = ctx.request.body;
     let rating;
     if (typeof(ctx.request.body.rating) === "string"){
@@ -129,7 +139,7 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         body,
         about : about === "" ? "your shop" : about,
         hidden : false,
-        source : "ADMIN",
+        source,
         productInfo : product_id,
         productImg : about !== "" ? product_img : "",
         ...customerImg,

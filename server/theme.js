@@ -86,6 +86,66 @@ router.post("/", async (ctx) => {
         data: reviewPanelData,
         type: DataType.JSON,
       });
+      const reviewDexCore = fs.readFileSync(
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "reviewdex_core.liquid"
+        )}`,
+        "utf8"
+      );
+      reviewPanelData = {
+        asset: {
+          key: "snippets/reviewdex_core.liquid",
+          value: reviewDexCore,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
+      });
+      const reviewDexWidget = fs.readFileSync(
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "reviewdex_widgets.liquid"
+        )}`,
+        "utf8"
+      );
+      reviewPanelData = {
+        asset: {
+          key: "snippets/reviewdex_widget.liquid",
+          value: reviewDexWidget,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
+      });
+      const reviewDexBadge = fs.readFileSync(
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "reviewdex_badge.liquid"
+        )}`,
+        "utf8"
+      );
+      reviewPanelData = {
+        asset: {
+          key: "snippets/reviewdex_badge.liquid",
+          value: reviewDexBadge,
+        },
+      };
+      await client.put({
+        path: `themes/${mainTheme}/assets`,
+        data: reviewPanelData,
+        type: DataType.JSON,
+      });
       ctx.response.status = 200;
     } catch (e) {
       ctx.response.status = 503;
