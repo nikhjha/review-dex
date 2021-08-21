@@ -120,9 +120,8 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                 }
                 const customerImgs = picture_urls.split(",");
                 let customerImg = [];
-                console.log(customerImgs);
                 if(customerImgs !== [""]){
-                    customerImgs.foreach((img) =>{
+                    customerImgs.forEach((img) =>{
                         const imgName = generateName(img);
                         customerImg.push(process.env.HOST + "/images/" + imgName);
                         downloadImg(img,imgName,()=>{});
