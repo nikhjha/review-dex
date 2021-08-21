@@ -6,7 +6,7 @@ import Review from "../model/review";
 import * as csv from "fast-csv";
 import * as fs from "fs";
 import * as path from "path";
-import * as request from "request";
+import request from "request";
 
 const router = Router();
 

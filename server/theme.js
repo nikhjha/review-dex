@@ -155,7 +155,7 @@ router.post("/", async (ctx) => {
         )}`,
         "utf8"
       );
-      const tempTheme = await client.get({path : `themes/${mainTheme}/assets`,query : { asset : {key : "layout/theme.liquid"}}});
+      const tempTheme = await client.get({path : `themes/${mainTheme}/assets`,query : {"asset[key]" : "layout/theme.liquid"}});
       console.log(tempTheme);
         const foundTheme = tempTheme.indexOf(reviewDexTheme);
         console.log(foundTheme);
