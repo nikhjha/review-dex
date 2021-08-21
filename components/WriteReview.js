@@ -134,8 +134,7 @@ export default function WriteReview({ active, setActive }) {
       const id = selectPayload.selection[0].id.split("/")
       setProductPicker(false);
       setProductID(id[id.length - 1]);
-      console.log(selectPayload.selection[0]);
-      setProductImg("");
+      setProductImg(selectPayload.selection[0].images[0].originalSrc);
     }}
   />
   </>
