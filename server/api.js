@@ -46,7 +46,7 @@ const upload = multer({
 
 
 router.get("/getMerchantDetail",async(ctx)=>{
-    const shop = ctx.request.query.id;
+    const shop = ctx.request.query.shop;
     try {
         const doc = await Merchant.findOne({shop : shop});
     if(doc.totalReviews === 0){
