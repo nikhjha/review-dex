@@ -160,7 +160,7 @@ router.post("/", async (ctx) => {
       console.log(tempTheme);
         const foundTheme = tempTheme.indexOf(reviewDexTheme);
         console.log(foundTheme);
-        if(foundTheme){
+        if(foundTheme !== -1){
             ctx.response.status = 200;
             return;
         }

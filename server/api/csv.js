@@ -21,12 +21,9 @@ const storage = multer.diskStorage({
 });
 
 const download = (url, path, callback) => {
-    request.head(url, (err, res, body) => {
-        console.log(url);
-      request(url,{uri : url})
+    request(url)
         .pipe(fs.createWriteStream(path))
-        .on('close', callback)
-    })
+        .on('close', callback);
 }
 const generateName = (url) =>{
     const img = url.split("/");
