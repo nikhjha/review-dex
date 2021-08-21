@@ -6,7 +6,7 @@ import Review from "../model/review";
 import * as csv from "fast-csv";
 import * as fs from "fs";
 import * as path from "path";
-import request from "request";
+import axios from "axios";
 
 const router = Router();
 
@@ -20,10 +20,21 @@ const storage = multer.diskStorage({
     },
 });
 
-const download = (url, path, callback) => {
-    request({uri : url})
-        .pipe(fs.createWriteStream(path))
-        .on('close', callback);
+const download = (url, path) => {
+  const writer = fs.createWriteStream(path)
+
+  const response = await axios({
+    url,
+    method: 'GET',
+    responseType: 'stream'
+  })
+
+  response.data.pipe(writer)
+
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve)
+    writer.on('error', reject)
+  })
 }
 const generateName = (url) =>{
     const img = url.split("/");
@@ -31,9 +42,10 @@ const generateName = (url) =>{
     const imgName = "myImage" + imgExt[0] + Date.now() + imgExt[1];
     return imgName;
 }
-const downloadImg = (url,imgName ,callback ) =>{
+const downloadImg = async(url,imgName) =>{
     const imgPath = path.resolve("server", "..", "public", "images") + "/"+ imgName;
-    download(url,imgPath,callback);
+    const response = await download(url,imgPath);
+    return response;
 }
 
 function checkFileType(file, cb) {
@@ -122,7 +134,7 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     customerImgs.forEach((img) =>{
                         const imgName = generateName(img);
                         customerImg.push(process.env.HOST + "/images/" + imgName);
-                        downloadImg(img,imgName,()=>{});
+                        downloadImg(img,imgName);
                     });
                 }else{
                     customerImg = [""];
@@ -140,6 +152,7 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     productInfo: product_id !== "" ? product_id : "",
                     customerImg,
                     created: review_date,
+                    verified : true
                 });
                 await newReview.save();
             })

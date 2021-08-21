@@ -164,20 +164,18 @@ router.post("/", async (ctx) => {
             return;
         }
         const newTheme = tempTheme.replace("</head>", "\n" + reviewDexTheme + "\n"+" </head>");
-        console.log(newTheme);
         reviewPanelData = {
             asset: {
               key: "layout/theme.liquid",
               value: newTheme,
             },
         };
-        const response = await client.put({
+        await client.put({
             path: `themes/${mainTheme}/assets`,
             data: reviewPanelData,
             type: DataType.JSON,
         });
-        console.log(response);
-      
+        ctx.response.status = 200;
     } catch (e) {
       ctx.response.status = 503;
       ctx.response.body = e;
