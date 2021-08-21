@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     },
 });
 
-const download = (url, path) => {
+const download = async(url, path) => {
   const writer = fs.createWriteStream(path)
 
   const response = await axios({
