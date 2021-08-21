@@ -26,7 +26,7 @@ class ReviewPanel {
       return;
     }
     else{
-      badges.forEach((badge)=>{
+      badges.forEach(async(badge)=>{
         const shop = badge.classList[1];
         const productID = badge.classList[3];
         const widgetType = badge.classList[2];
