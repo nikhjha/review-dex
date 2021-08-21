@@ -1,6 +1,7 @@
 import Router from "koa-router";
 import fs from "fs";
 import Shopify, {  DataType } from "@shopify/shopify-api";
+import * as path from "path";
 
 const router = Router();
 
