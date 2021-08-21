@@ -45,7 +45,7 @@ const upload = multer({
 });
 
 
-router.get("/getMerchantDetail/:id",async(ctx)=>{
+router.get("/getMerchantDetail",async(ctx)=>{
     const shop = ctx.request.query.id;
     try {
         const doc = await Merchant.findOne({shop : shop});

@@ -33,6 +33,7 @@ class ReviewPanel {
         if(!productID){
           badge.querySelector(".review_dex_stars > input").value = 0;
           badge.querySelector("span").innerHTML = 0;
+          return;
         }
         if(widgetType === "review_dex_link_badge"){
           const linkBadge = badge.querySelector(".review_dex_product_badge");
