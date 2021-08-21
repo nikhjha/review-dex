@@ -157,7 +157,6 @@ router.post("/", async (ctx) => {
       );
       let tempTheme = await client.get({path : `themes/${mainTheme}/assets`,query : {"asset[key]" : "layout/theme.liquid"}});
       tempTheme = tempTheme.body.asset.value;
-      console.log(tempTheme);
         const foundTheme = tempTheme.indexOf(reviewDexTheme);
         console.log(foundTheme);
         if(foundTheme !== -1){
@@ -165,17 +164,19 @@ router.post("/", async (ctx) => {
             return;
         }
         const newTheme = tempTheme.replace("</head>", "\n" + reviewDexTheme + "\n"+" </head>");
+        console.log(newTheme);
         reviewPanelData = {
             asset: {
               key: "layout/theme.liquid",
               value: newTheme,
             },
         };
-        await client.put({
+        const response = await client.put({
             path: `themes/${mainTheme}/assets`,
             data: reviewPanelData,
             type: DataType.JSON,
         });
+        console.log(response);
       
     } catch (e) {
       ctx.response.status = 503;
