@@ -13,7 +13,7 @@ const reviewSchema = new Schema({
     hidden: Boolean,
     customerImg : [String],
     productInfo : String,
-    productImg : String
+    verified : Boolean
 });
 
 const Review = model("Review", reviewSchema);

@@ -32,7 +32,7 @@ class ReviewPanel {
         const widgetType = badge.classList[2];
         if(!productID){
           badge.querySelector(".review_dex_stars > input").value = 0;
-          badge.querySelector("span").innerHTML = 0;
+          badge.querySelector("span").innerHTML = "(" +0 +")";
           return;
         }
         if(widgetType === "review_dex_link_badge"){
@@ -46,7 +46,7 @@ class ReviewPanel {
         const data = await fetch(url);
         const { product } = await data.json();
         badge.querySelector(".review_dex_stars > input").value = Math.round(product.averageRating);
-        badge.querySelector(".review_dex_product_badge > span").innerHTML = product.totalReviews;
+        badge.querySelector(".review_dex_product_badge > span").innerHTML = "("+product.totalReviews+")";
       });
       this.setStars();
     }
@@ -77,14 +77,11 @@ class ReviewPanel {
     const ratingDiv = document.querySelector(".review_dex_model_content_header_1 > .review_dex_stars > input ");
     ratingDiv.value = this.modelItem.rating;
     const dateDiv = document.querySelector(".review_dex_model_content_header_2 > p:nth-child(1)");
-    dateDiv.innerHTML = this.modelItem.created;
+    dateDiv.innerHTML = this.modelItem.created.substring(0,10);
     const varifiedDiv = document.querySelector(".review_dex_model_content_header_2 > p:nth-child(2)");
     varifiedDiv.innerHTML = this.modelItem.verified ? "<span class='material-icons'> verified </span>Verified Purchase" : "";
     const bodyDiv = document.querySelector(".review_dex_model_content > p");
     bodyDiv.innerHTML = this.modelItem.body;
-    const productImg = document.querySelector(".review_dex_model_content_footer > .review_dex_product > img");
-    productImg.alt = "product-img";
-    productImg.src = this.modelItem.productImg;
     const productInfoDiv = document.querySelector(".review_dex_model_content_footer > .review_dex_product > p");
     productInfoDiv.innerHTML = this.modelItem.about;
     const customerImg = document.querySelector(".review_dex_model_img > img");
@@ -157,6 +154,15 @@ class ReviewPanel {
       };
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
+      const writeForm = document.getElementById("review_dex_write_form");
+    writeForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
+      console.log(response);
+      const modalDiv = document.querySelector(".review_dex_write_modal");
+      modalDiv.style.display = "none";
+    });
     }else{
       const url = this.link + "/api/getMerchantDetail?shop=" + this.shop;
       const data = await fetch(url);
@@ -173,15 +179,6 @@ class ReviewPanel {
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
     }
-    const writeForm = document.getElementById("review_dex_write_form");
-    writeForm.addEventListener("submit", async(e)=>{
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
-      console.log(response);
-      const modalDiv = document.querySelector(".review_dex_write_modal");
-      modalDiv.style.display = "none";
-    });
     this.renderReviewsInfo();
     this.renderReviews();
     this.setStars();
@@ -283,23 +280,15 @@ class ReviewPanel {
       const para3 = document.createElement("p");
       para3.innerText = reviewItem.body;
       reviewDetailDiv.appendChild(para3);
-      const productInfo = document.createElement("div");
-      productInfo.className = "review_dex_product";
-      if (reviewItem.productImg) {
-        const productImg = document.createElement("img");
-        productImg.src = reviewItem.productImg;
-        productImg.alt = "product-pic";
-        productInfo.appendChild(productImg);
-        productImg.addEventListener("load", () => {
-          this.resizeGridItem(reviewItemMainDiv, reviewContentDiv);
-        });
-      }
-      const para4 = document.createElement("p");
-      para4.innerText = reviewItem.about;
-
-      productInfo.appendChild(para4);
       reviewItemDiv.appendChild(reviewDetailDiv);
-      reviewItemDiv.appendChild(productInfo);
+      if(!this.productReview){
+        const productInfo = document.createElement("div");
+        productInfo.className = "review_dex_product";
+        const para4 = document.createElement("p");
+        para4.innerText = reviewItem.about;
+        productInfo.appendChild(para4);
+        reviewItemDiv.appendChild(productInfo);
+      }
       reviewItemMainDiv.appendChild(reviewItemDiv);
       reviewItemMainDiv.addEventListener("click",()=>{
         this.modelItem = reviewItem;
@@ -308,8 +297,7 @@ class ReviewPanel {
         modalDiv.style.display = "flex";
         this.renderModel();
       });
-      reviewContentDiv.appendChild(reviewItemMainDiv);
-      
+      reviewContentDiv.appendChild(reviewItemMainDiv);  
     });
   }
   setStars() {

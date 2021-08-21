@@ -117,7 +117,7 @@ router.post("/", async (ctx) => {
       );
       reviewPanelData = {
         asset: {
-          key: "snippets/reviewdex_widget.liquid",
+          key: "snippets/reviewdex_widgets.liquid",
           value: reviewDexWidget,
         },
       };
@@ -146,7 +146,36 @@ router.post("/", async (ctx) => {
         data: reviewPanelData,
         type: DataType.JSON,
       });
-      ctx.response.status = 200;
+      const reviewDexTheme = fs.readFileSync(
+        `${path.resolve(
+          "server",
+          "..",
+          "template_shopify",
+          "theme.liquid"
+        )}`,
+        "utf8"
+      );
+      const tempTheme = await client.get({path : `themes/${mainTheme}/assets.json?asset[key]=layout/theme.liquid`});
+      console.log(tempTheme);
+        const foundTheme = tempTheme.indexOf(reviewDexTheme);
+        console.log(foundTheme);
+        if(foundTheme){
+            ctx.response.status = 200;
+            return;
+        }
+        const newTheme = tempTheme.replace("</head>", reviewDexTheme + " </head>");
+        reviewPanelData = {
+            asset: {
+              key: "layout/theme.liquid",
+              value: newTheme,
+            },
+        };
+        await client.put({
+            path: `themes/${mainTheme}/assets`,
+            data: reviewPanelData,
+            type: DataType.JSON,
+        });
+      
     } catch (e) {
       ctx.response.status = 503;
       ctx.response.body = e;

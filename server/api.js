@@ -55,6 +55,7 @@ router.get("/getMerchantDetail",async(ctx)=>{
         return;
     }
     const reviews = await Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}); 
+    
     ctx.response.status = 200;
     ctx.response.body = {merchant : doc , reviews}; 
     }
@@ -118,7 +119,7 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         source = "WEB";
     }
     
-    const {name,about,email,title,body,product_id,product_img} = ctx.request.body;
+    const {name,about,email,title,body,product_id} = ctx.request.body;
     let rating;
     if (typeof(ctx.request.body.rating) === "string"){
         rating = ctx.request.body.rating - "0";
@@ -141,9 +142,9 @@ router.post("/review", upload.single("myImage") ,async(ctx) => {
         hidden : false,
         source,
         productInfo : product_id,
-        productImg : about !== "" ? product_img : "",
         ...customerImg,
         created : new Date().toISOString(),
+        verified : false,
     });
     await newReview.save();
     function calculateAverage(){

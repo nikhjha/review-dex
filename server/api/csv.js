@@ -6,6 +6,7 @@ import Review from "../model/review";
 import * as csv from "fast-csv";
 import * as fs from "fs";
 import * as path from "path";
+import * as request from "request";
 
 const router = Router();
 
@@ -18,6 +19,24 @@ const storage = multer.diskStorage({
         );
     },
 });
+
+const download = (url, path, callback) => {
+    request.head(url, (err, res, body) => {
+      request(url)
+        .pipe(fs.createWriteStream(path))
+        .on('close', callback)
+    })
+}
+const generateName = (url) =>{
+    const img = url.split("/");
+    const imgExt = img[img.length - 1].split(".");
+    const imgName = "myImage" + imgExt[0] + Date.now() + imgExt[1];
+    return imgName;
+}
+const downloadImg = (url,imgName ,callback ) =>{
+    const imgPath = path.resolve("server", "..", "public", "images") + "/"+ imgName;
+    download(url,imgPath,callback);
+}
 
 function checkFileType(file, cb) {
     // Allowed ext
@@ -99,6 +118,17 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     default :
                         break;
                 }
+                const customerImgs = picture_urls.split(",");
+                let customerImg = [];
+                if(customerImgs !== [""]){
+                    customerImgs.foreach((img) =>{
+                        const imgName = generateName(img);
+                        customerImg.push(process.env.HOST + "/images/" + imgName);
+                        downloadImg(img,imgName,()=>{});
+                    });
+                }else{
+                    customerImg = [""];
+                }
                 const newReview = new Review({
                     merchantID: doc.id,
                     name: reviewer_name,
@@ -110,7 +140,7 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                     hidden: false,
                     source: source.toUpperCase(),
                     productInfo: product_id !== "" ? product_id : "",
-                    customerImg: picture_urls.split(","),
+                    customerImg,
                     created: review_date,
                 });
                 await newReview.save();
