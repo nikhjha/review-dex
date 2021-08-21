@@ -4,7 +4,7 @@ import Merchant from "../model/merchant";
 
 const router = Router();
 
-router.get("/",(ctx)=>{
+router.get("/",async(ctx)=>{
     const withReviews = ctx.request.query.with_reviews;
     const productID = ctx.request.query.product_id;
     const shop = ctx.request.query.shop;
