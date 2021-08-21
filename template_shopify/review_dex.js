@@ -30,6 +30,10 @@ class ReviewPanel {
         const shop = badge.classList[1];
         const productID = badge.classList[3];
         const widgetType = badge.classList[2];
+        if(!productID){
+          badge.querySelector(".review_dex_stars > input").value = 0;
+          badge.querySelector("span").innerHTML = 0;
+        }
         if(widgetType === "review_dex_link_badge"){
           const linkBadge = badge.querySelector(".review_dex_product_badge");
           linkBadge.style.curser = "pointer";
