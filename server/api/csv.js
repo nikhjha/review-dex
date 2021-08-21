@@ -129,8 +129,9 @@ router.post("/", upload.single("myCSV"), async (ctx) => {
                         break;
                 }
                 const customerImgs = picture_urls.split(",");
+
                 let customerImg = [];
-                if(customerImgs !== [""] || customerImgs !== ['']){
+                if(customerImgs[0] !== ""){
                     customerImgs.forEach((img) =>{
                         const imgName = generateName(img);
                         customerImg.push(process.env.HOST + "/images/" + imgName);
