@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
 });
 
 const download = (url, path, callback) => {
+    console.log(url);
     request.head(url, (err, res, body) => {
       request(url)
         .pipe(fs.createWriteStream(path))

@@ -155,7 +155,8 @@ router.post("/", async (ctx) => {
         )}`,
         "utf8"
       );
-      const tempTheme = await client.get({path : `themes/${mainTheme}/assets`,query : {"asset[key]" : "layout/theme.liquid"}});
+      let tempTheme = await client.get({path : `themes/${mainTheme}/assets`,query : {"asset[key]" : "layout/theme.liquid"}});
+      tempTheme = tempTheme.body.asset.value;
       console.log(tempTheme);
         const foundTheme = tempTheme.indexOf(reviewDexTheme);
         console.log(foundTheme);
@@ -163,7 +164,7 @@ router.post("/", async (ctx) => {
             ctx.response.status = 200;
             return;
         }
-        const newTheme = tempTheme.replace("</head>", reviewDexTheme + " </head>");
+        const newTheme = tempTheme.replace("</head>", "\n" + reviewDexTheme + "\n"+" </head>");
         reviewPanelData = {
             asset: {
               key: "layout/theme.liquid",
