@@ -47,6 +47,7 @@ const upload = multer({
 
 router.get("/getMerchantDetail",async(ctx)=>{
     const shop = ctx.request.query.shop;
+    const items = ctx.request.query.items;
     try {
         const doc = await Merchant.findOne({shop : shop});
     if(doc.totalReviews === 0){
@@ -54,7 +55,7 @@ router.get("/getMerchantDetail",async(ctx)=>{
         ctx.response.body = {merchant : doc , reviews : []};
         return;
     }
-    const reviews = await Review.find({merchantID : doc.id, hidden : false},null,{limit : 6}); 
+    const reviews = await Review.find({merchantID : doc.id, hidden : false},null,{limit : items}).sort('-created'); 
     
     ctx.response.status = 200;
     ctx.response.body = {merchant : doc , reviews}; 

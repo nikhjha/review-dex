@@ -3,6 +3,7 @@ class ReviewPanel {
     this.link = "";
     this.reviewInfo = {};
     this.reviewData = [];
+    this.items = 6;
     this.setBadge();
     const widgetInfoDocument = document.getElementById("review_dex_widget_info");
     if(!widgetInfoDocument){
@@ -140,7 +141,7 @@ class ReviewPanel {
       return;
     }
     if(this.productReview){
-      const url = this.link + "/api/products?shop=" + this.shop + "&product_id="+ this.productID + "&with_reviews=true";
+      const url = this.link + "/api/products?shop=" + this.shop + "&product_id="+ this.productID + "&with_reviews=true&items=" + this.items;
       const data = await fetch(url);
       const { product, reviews } = await data.json();
       const reviewInfo = {
@@ -164,7 +165,7 @@ class ReviewPanel {
       modalDiv.style.display = "none";
     });
     }else{
-      const url = this.link + "/api/getMerchantDetail?shop=" + this.shop;
+      const url = this.link + "/api/getMerchantDetail?shop=" + this.shop + "&items=" + this.items;
       const data = await fetch(url);
       const { merchant, reviews } = await data.json();
       const reviewInfo = {
