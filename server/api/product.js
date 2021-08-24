@@ -8,9 +8,10 @@ router.get("/",async(ctx)=>{
     const withReviews = ctx.request.query.with_reviews;
     const productID = ctx.request.query.product_id;
     const shop = ctx.request.query.shop;
+    const items = ctx.request.query.items - "0";
     try {
         const doc = await Merchant.findOne({shop : shop});
-        const reviews = await Review.find({merchantID : doc.id, productInfo : productID});
+        const reviews = await Review.find({merchantID : doc.id, productInfo : productID, hidden : false},null,{limit : items}).sort('-created');
         let totalReviews = 0;
         let oneStar = 0;
         let twoStar = 0;

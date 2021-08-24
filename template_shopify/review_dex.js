@@ -298,7 +298,8 @@ class ReviewPanel {
         modalDiv.style.display = "flex";
         this.renderModel();
       });
-      reviewContentDiv.appendChild(reviewItemMainDiv);  
+      reviewContentDiv.appendChild(reviewItemMainDiv); 
+      this.resizeGridItem(reviewItemMainDiv, reviewContentDiv); 
     });
   }
   setStars() {
