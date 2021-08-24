@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding: 0px 20px;
+    padding: 20px 20px;
 }
 .review_dex_section *{
     margin: 0;
@@ -30,6 +30,7 @@
     justify-content: end;
     gap : 10px;
     position: relative;
+    flex-wrap: wrap;
 }
 
 .review_dex_nav span{
@@ -128,7 +129,7 @@
     display: none;
     margin-right: 20px;
     border: 1px solid rgb(200,200,200);
-    width: 100px;
+    width: 120px;
     height: 35px;
     border-radius: 5px;
     background-color: white;
@@ -150,6 +151,7 @@
     box-shadow: 0px 0px 5px 0px rgb(200,200,200);
     grid-row-end: span 8;
     cursor: pointer;
+    overflow: hidden;
 }
 .review_dex_item:hover {
     background-color: rgb(240, 240,240);
@@ -220,19 +222,34 @@
     box-sizing: border-box;
 }
 .review_dex_modal_container {
-    width: 800px;
-    height: 500px;
+    width: 300px;
+    height: 600px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
     background-color: white;
     border-radius: 20px;
     position: relative;
     overflow: hidden;
     z-index: 100;
 }
+@media screen and (min-width: 800px) {
+    .review_dex_modal_container {
+        width: 800px;
+        height: 500px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 100%;
+        background-color: white;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+        z-index: 100;
+    }
+}
 .review_dex_write_modal_container {
     width: 800px;
+    max-width: 90%;
     height: 500px;
     background-color: white;
     border-radius: 20px;
@@ -349,4 +366,18 @@
     display: flex;
     gap : 10px;
     align-items: center;
+}
+.review_dex_add_more_review{
+    padding: 20px 0px;
+    display: flex;
+    justify-content: center;
+}
+#review_dex_add_more_review_btn{
+    border: none;
+    padding: 10px;
+    background-color: rgb(20,20,20);
+    color: white;
+}
+#review_dex_add_more_review_btn:hover{
+    background-color: rgb(0,0,0);
 }

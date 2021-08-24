@@ -11,6 +11,7 @@ class ReviewPanel {
       return;
     }
     this.setReviewDrop();
+    this.setAddMore();
     this.setModal();
     this.ismount = true;
     const widgetInfo = widgetInfoDocument.classList;
@@ -20,6 +21,13 @@ class ReviewPanel {
       this.productID = widgetInfo[2];
       this.setWriteModal();
     }
+  }
+  setAddMore(){
+    const btn = document.getElementById("review_dex_add_more_review_btn");
+    btn.addEventListener("click",()=>{
+      this.items = this.items + 6;
+      this.getInfo();
+    });
   }
   setBadge() {
     const badges = document.querySelectorAll(".review_dex_badge");
