@@ -175,46 +175,7 @@ router.post("/", async (ctx) => {
             data: reviewPanelData,
             type: DataType.JSON,
         });
-        const reviewDexLinkBadge = fs.readFileSync(
-            `${path.resolve(
-              "server",
-              "..",
-              "template_shopify",
-              "link_badge.liquid"
-            )}`,
-            "utf8"
-          );
-          const reviewDexProduct = fs.readFileSync(
-            `${path.resolve(
-              "server",
-              "..",
-              "template_shopify",
-              "product.liquid"
-            )}`,
-            "utf8"
-          );
-        let productLiquid = await client.get({path : `themes/${mainTheme}/assets`,query : {"asset[key]" : "sections/product.liquid"}});
-        productLiquid = productLiquid.body.asset.value;
-        const foundProduct = tempTheme.indexOf("render 'product-price'");
-        console.log(foundProduct);
-        if(foundProduct !== -1){
-           const partial1 = productLiquid.slice(0,foundProduct);
-           const partial2 =  productLiquid.slice(foundProduct);
-           const newProductLiquid = partial1 + partial2.replace("}", "}" + "\n" + reviewDexLinkBadge +"\n").replace("{% schema %}", "\n" + reviewDexProduct + "\n" + "{% schema %}");
-           reviewPanelData = {
-            asset: {
-              key: "sections/product.liquid",
-              value: newProductLiquid,
-            },
-            }
-            await client.put({
-                path: `themes/${mainTheme}/assets`,
-                data: reviewPanelData,
-                type: DataType.JSON,
-            });
-        }else{
-
-        }
+        
         ctx.response.status = 200;
     } catch (e) {
       ctx.response.status = 503;
