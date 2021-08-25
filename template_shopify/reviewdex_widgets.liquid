@@ -101,22 +101,84 @@
           <button id="review_dex_write_model_cls_btn"><span class="material-icons "> close </span></button>
           <form id="review_dex_write_form">
             <div class="review_dex_form">
-              <p>Name</p>
-              <input type="text" name="name" required/>
-              <p>Email</p>
-              <input type="email" name="email" required/>
-              <p>Your Image</p>
-              <input type="file" name="myImage" />
-              <p>Rating</p>
-              <input type="number" name="rating" min="1" max="5" required/>
-              <p>Title</p>
-              <input type="text" name="title" />
-              <p>Body</p>
-              <textarea rows = "5" cols = "60" name = "body">
-             </textarea>
-             <input type="text" name="about" value="{{ product.handle }}" style="display: none;"/>
-             <input type="text" name="product_id" value="{{ product.id }}" style="display: none;"/>
-              <button type="submit">Submit</button>
+              <div id="review_dex_form_section-1">
+                <p>HOW WOULD YOU RATE THIS ITEM?</p>
+                <button id="review_dex_form_rating_no_5">
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span> 
+                  Love it!
+                </button>
+                <button id="review_dex_form_rating_no_4">
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star_border</span> 
+                  Like it
+                </button>
+                <button id="review_dex_form_rating_no_3">
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span> 
+                  It's ok
+                </button>
+                <button id="review_dex_form_rating_no_2">
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span> 
+                  Didn't like it
+                </button>
+                <button id="review_dex_form_rating_no_1">
+                  <span class="material-icons-outlined">star</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span>
+                  <span class="material-icons-outlined">star_border</span> 
+                 Hate it
+                </button>
+                <input id="review_dex_form_rating" type="number" name="rating"  style="display: none;"/>
+              </div>
+              <div id="review_dex_form_section-2">
+                <h1>SHOW IT OFF</h1>
+                <p>WE'D LOVE TO SEE IT IN ACTION!</p>
+                <div>
+                  <input id="review_dex_form_img" type="file" name="myImage" />
+                  <label for="review_dex_form_img"> Choose Photo</label>
+                </div>
+                <div class="review_dex_section_end"></div>
+                <a class="review_dex_section_back" href="#review_dex_form_section-1">Back</a>
+                <a class="review_dex_section_next" href="#review_dex_form_section-3">Next</a>
+              </div>
+              <div  id="review_dex_form_section-3">
+                <h1>TELL US MORE!</h1>
+                <p>Title</p>
+                <input type="text" name="title" required/>
+                <p>Body</p>
+                <textarea rows = "5" cols = "60" name = "body" required>
+                </textarea>
+                <a class="review_dex_section_back" href="#review_dex_form_section-2">Back</a>
+                <a class="review_dex_section_next" href="#review_dex_form_section-4">Next</a>
+              </div>
+              <div id="review_dex_form_section-4">
+                <input type="text" name="about" value="{{ product.handle }}" style="display: none;"/>
+                <input type="text" name="product_id" value="{{ product.id }}" style="display: none;"/>
+                <input type="text" name="product_img" value="{{ product.featured_image }}" style="display: none;"/>
+                <h1>About you</h1>
+                <p>Your Name</p>
+                <input type="text" name="name" required/>
+                <p>Your Email</p>
+                <input type="email" name="email" required/>
+                <p>By submitting, I acknowledge the Terms of Service and Privacy Policy and that my review will be publicly posted and shared online</p>
+                <button class="review_dex_form_submit_btn" type="submit">Submit</button>
+                <a class="review_dex_section_back" href="#review_dex_form_section-3">Back</a>
+              </div>
             </div>
           </form>
         </div>

@@ -79,6 +79,17 @@ class ReviewPanel {
     modalCloser.addEventListener("click",()=>{
       modalDiv.style.display = "none";
     }); 
+    const ratingInput = document.getElementById("review_dex_form_rating");
+    const btn5 = document.getElementById("review_dex_form_rating_no_5");
+    btn5.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '5';location.href = "#review_dex_form_section-2"});  
+    const btn4 = document.getElementById("review_dex_form_rating_no_4");
+    btn4.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '4';location.href = "#review_dex_form_section-2"});  
+    const btn3 = document.getElementById("review_dex_form_rating_no_3");
+    btn3.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '3';location.href = "#review_dex_form_section-2"});  
+    const btn2 = document.getElementById("review_dex_form_rating_no_2");
+    btn2.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '2';location.href = "#review_dex_form_section-2"});  
+    const btn1 = document.getElementById("review_dex_form_rating_no_1");
+    btn1.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '1';location.href = "#review_dex_form_section-2"});
   }
   renderModel(){
     const nameDiv = document.querySelector(".review_dex_model_content_header_1 > p");
@@ -123,7 +134,9 @@ class ReviewPanel {
       }
     }else{
       const customerImg = document.querySelector(".review_dex_model_img > img");
-      customerImg.remove();
+      if(customerImg){
+        customerImg.remove();
+      }
     }
     this.setStars();
   }
@@ -255,6 +268,8 @@ class ReviewPanel {
   renderReviews() {
     const reviewData = this.reviewData;
     const reviewContentDiv = document.querySelector(".review_dex_content");
+    const prevDataDivs = document.querySelectorAll(".review_dex_item");
+    prevDataDivs.forEach((dataDiv) => {dataDiv.remove()});
     reviewData.forEach((reviewItem) => {
       const reviewItemMainDiv = document.createElement("div");
       reviewItemMainDiv.className = "review_dex_item";
