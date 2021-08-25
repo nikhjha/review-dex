@@ -156,6 +156,13 @@ class ReviewPanel {
         }
       });
     });
+    const reviewSortDrop = document.querySelector("#review_dex_sort_dropdown");
+    const reviewDropSortBtn = document.querySelector("#review_dex_sort_btn");
+    let reviewDropSortState = false;
+    reviewDropSortBtn.addEventListener("click",()=>{
+      reviewDropSortState = !reviewDropSortState;
+      reviewSortDrop.style.display = reviewDropSortState ? "block" : "none";
+    });
   }
   async getInfo() {
     if(!this.ismount){

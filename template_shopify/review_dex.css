@@ -56,6 +56,25 @@
     border-radius: 10px;
     padding: 20px;
 }
+#review_dex_sort_dropdown {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    max-width: 100%;
+    background-color: white;
+    transform: translateY(100%);
+    border-radius: 10px;
+    padding: 20px;
+}
+#review_dex_sort_dropdown p{
+    font-size: 20px;
+}
+#review_dex_sort_dropdown span{
+    font-size: 15px;
+    transform: translateX(60px);
+}
 #review_dex_dropdown > p {
     font-size: 40px;
     font-weight: 600;
