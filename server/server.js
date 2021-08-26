@@ -85,7 +85,12 @@ app.prepare().then(async () => {
           await newMerchant.save();
         }
         // Redirect to app with shop parameter upon auth
-        ctx.redirect(`/?shop=${shop}&host=${host}`);
+        
+        if (ACTIVE_SHOPIFY_SHOPS[shop]) {
+          ctx.redirect(`https://${shop}/admin/apps`);
+        } else {
+          ctx.redirect(`/?shop=${shop}&host=${host}`);
+        }
       },
     })
   );
