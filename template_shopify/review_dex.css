@@ -356,6 +356,11 @@
     flex-grow: 1;
     min-height: 80px;
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none; 
+}
+.review_dex_model_content > p::-webkit-scrollbar {
+    display: none;
 }
 
 
@@ -496,7 +501,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;
+    gap: 20px;
     position: relative;
 }
 #review_dex_form_section-4 h1{

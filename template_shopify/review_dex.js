@@ -76,7 +76,7 @@ class ReviewPanel {
       modalDiv.style.display = "flex";
     });
     document.addEventListener("click", (e) => {
-      if(e.target !== modalDiv){
+      if(e.target === modalDiv){
         modalDiv.style.display = "none";
       }
     });
@@ -103,11 +103,10 @@ class ReviewPanel {
   }
   renderModel(){
     const model = document.querySelector(".review_dex_modal");
-    const click = document.addEventListener("click", (e)=>{
-      if(e.target !== model){
-        modal.style.display = "none";
+    document.addEventListener("click", (e)=>{
+      if(e.target === model){
+        model.style.display = "none";
         this.modelItem = {};
-        document.removeEventListener("click",click);
       }
     });
     const nameDiv = document.querySelector(".review_dex_model_content_header_1 > p");

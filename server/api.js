@@ -126,7 +126,7 @@ router.post("/review", upload.array("myImage"), async (ctx) => {
       rating = ctx.request.body.rating;
     }
 
-    const customerImg = ctx.file
+    const customerImg = ctx.files
       ? { customerImg: ctx.files.map( ({filename}) => { return process.env.HOST + "/images/" + filename}) }
       : {};
 
