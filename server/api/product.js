@@ -62,6 +62,7 @@ router.get("/",async(ctx)=>{
             ctx.response.status = 200;
             ctx.response.body = { product }; 
         }
+        console.log(product);
     }
     catch(e){
         ctx.response.status = 400;
