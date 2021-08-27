@@ -178,12 +178,14 @@ router.post("/review", upload.single("myImage"), async (ctx) => {
 router.get("/merchant", async (ctx) => {
   try {
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    console.log(shop);
     const doc = await Merchant.findOne({ shop: shop });
     ctx.response.status = 200;
     ctx.response.body = { merchant: doc };
   } catch (e) {
     ctx.response.status = 400;
     ctx.response.body = e;
+    console.log(e);
   }
 });
 
