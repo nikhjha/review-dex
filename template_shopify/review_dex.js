@@ -80,8 +80,8 @@ class ReviewPanel {
         modalDiv.style.display = "none";
       }
     });
-    const imgInput  = document.querySelector(".review_dex_form_section-2 > div > input");
-    const imgLabel  = document.querySelector(".review_dex_form_section-2 > div > label");
+    const imgInput  = document.querySelector("#review_dex_form_section-2 > div > input");
+    const imgLabel  = document.querySelector("#review_dex_form_section-2 > div > label");
     imgInput.addEventListener("change", (e) => {
       imgLabel.innerHTML = e.target.files.length + " file selected";
     });
