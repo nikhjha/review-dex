@@ -217,6 +217,7 @@
     align-items: center;
     background-color: rgba(0,0,0, 0.4);
     display: none;
+    z-index: 500;
 }
 .review_dex_write_modal {
     position: fixed;
@@ -229,6 +230,7 @@
     align-items: center;
     background-color: rgba(0,0,0, 0.4);
     display: none;
+    z-index: 500;
 }
 .review_dex_modal *{
     margin: 0;

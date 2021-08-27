@@ -105,7 +105,7 @@ router.post("/hide/:id", async (ctx) => {
   }
 });
 
-router.post("/review", upload.single("myImage"), async (ctx) => {
+router.post("/review", upload.array("myImage"), async (ctx) => {
   try {
     let shop;
     let source;
@@ -127,7 +127,7 @@ router.post("/review", upload.single("myImage"), async (ctx) => {
     }
 
     const customerImg = ctx.file
-      ? { customerImg: [process.env.HOST + "/images/" + ctx.file.filename] }
+      ? { customerImg: ctx.files.map( ({filename}) => { return process.env.HOST + "/images/" + filename}) }
       : {};
 
     const doc = await Merchant.findOne({ shop: shop });

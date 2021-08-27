@@ -75,6 +75,16 @@ class ReviewPanel {
     writeBtn.addEventListener("click", () => {
       modalDiv.style.display = "flex";
     });
+    document.addEventListener("click", (e) => {
+      if(e.target !== modalDiv){
+        modalDiv.style.display = "none";
+      }
+    });
+    const imgInput  = document.querySelector(".review_dex_form_section-2 > div > input");
+    const imgLabel  = document.querySelector(".review_dex_form_section-2 > div > label");
+    imgInput.addEventListener("change", (e) => {
+      imgLabel.innerHTML = e.target.files.length + " file selected";
+    });
     const modalCloser = document.querySelector("#review_dex_write_model_cls_btn");
     modalCloser.addEventListener("click",()=>{
       modalDiv.style.display = "none";
@@ -92,6 +102,14 @@ class ReviewPanel {
     btn1.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '1';location.href = "#review_dex_form_section-2"});
   }
   renderModel(){
+    const model = document.querySelector(".review_dex_modal");
+    const click = document.addEventListener("click", (e)=>{
+      if(e.target !== model){
+        modal.style.display = "none";
+        this.modelItem = {};
+        document.removeEventListener("click",click);
+      }
+    });
     const nameDiv = document.querySelector(".review_dex_model_content_header_1 > p");
     nameDiv.innerHTML = this.modelItem.name;
     const ratingDiv = document.querySelector(".review_dex_model_content_header_1 > .review_dex_stars > input ");
@@ -181,6 +199,7 @@ class ReviewPanel {
         total2Star: product.twoStar,
         total1Star: product.oneStar,
       };
+      console.log(product);
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
       const writeForm = document.getElementById("review_dex_write_form");

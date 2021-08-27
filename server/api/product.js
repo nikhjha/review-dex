@@ -20,7 +20,7 @@ router.get("/",async(ctx)=>{
         let fiveStar = 0;
         function calculateAverage(){
             const ans = oneStar + 2 * twoStar + 3 * threeStar + 4 * fourStar + 5 * fiveStar;
-            const answer =  ans / (totalReviews);
+            const answer =  totalReviews === 0 ? 0 : ans / (totalReviews);
             return answer.toFixed(2);
         }
         reviews.forEach(({rating}) => {
