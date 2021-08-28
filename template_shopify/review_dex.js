@@ -260,7 +260,7 @@ class ReviewPanel {
     ).value = Math.round(reviewInfo.overallRating);
     const ratingInDrop = document.querySelector("#review_dex_dropdown > p");
     ratingInDrop.innerHTML =
-      ratingInDrop.innerHTML + " " + reviewInfo.overallRating;
+      "<span class='material-icons-outlined'> star </span> " + reviewInfo.overallRating;
     for (let i = 1; i <= 5; i++) {
       const bar = document.querySelector(`#review_dex_${i}_progress_bar > div`);
       const total = document.querySelector(`#review_dex_${i}_review_count`);
