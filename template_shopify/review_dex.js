@@ -215,10 +215,10 @@ class ReviewPanel {
     writeForm.addEventListener("submit", async(e)=>{
       e.preventDefault();
       const formData = new FormData(e.target);
-      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
-      console.log(response);
       const modalDiv = document.querySelector(".review_dex_write_modal");
       modalDiv.style.display = "none";
+      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
+      console.log(response);
     });
     }else{
       const url = this.link + "/api/getMerchantDetail?shop=" + this.shop + "&items=" + this.items;
