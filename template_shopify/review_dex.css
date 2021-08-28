@@ -369,6 +369,9 @@
     gap : 10px;
     align-items: center;
 }
+.review_dex_product_badge > span {
+    transform : translateY(-3px);
+}
 .review_dex_add_more_review{
     padding: 20px 0px;
     display: flex;
@@ -525,4 +528,16 @@
     cursor: pointer;
     margin-bottom: 30px;
     background-color: #008CBA;
+}
+.review_dex_write_modal_container a{
+    text-decoration: none;
+    border: 1px solid black;
+    color: black;
+    padding: 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.review_dex_write_modal_container a:hover{
+    background-color: black;
+    color: white;
 }

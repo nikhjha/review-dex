@@ -36,7 +36,7 @@ class ReviewPanel {
     }
   }
   setBadge() {
-    const badges = document.querySelectorAll(".review_dex_badge");
+    const badges = document.querySelectorAll(".review_dex_badge_div");
     if(badges.length === 0){
       return;
     }
@@ -148,7 +148,7 @@ class ReviewPanel {
     const productInfoDiv = document.querySelector(".review_dex_model_content_footer > .review_dex_product > p");
     productInfoDiv.innerHTML = this.modelItem.about;
     const customerImg = document.querySelector(".review_dex_model_img > img");
-    if(this.modelItem.customerImg[0] !== ""){
+    if(this.modelItem.customerImg[0] && this.modelItem.customerImg[0] !== ""){
       if(customerImg){
         customerImg.alt = this.modelItem.name;
         customerImg.src = this.modelItem.customerImg[0];
@@ -320,7 +320,7 @@ class ReviewPanel {
       reviewItemMainDiv.className = "review_dex_item";
       const reviewItemDiv = document.createElement("div");
       reviewItemDiv.className = "review_dex_item_content";
-      if (reviewItem.customerImg[0] !== "") {
+      if (reviewItem.customerImg[0] && reviewItem.customerImg[0] !== "") {
         const reviewImage = document.createElement("img");
         reviewImage.src = reviewItem.customerImg[0];
         reviewImage.alt = reviewItem.name;
