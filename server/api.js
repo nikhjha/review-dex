@@ -128,7 +128,7 @@ router.post("/review", upload.array("myImage"), async (ctx) => {
 
     const customerImg = ctx.files
       ? { customerImg: ctx.files.map( ({filename}) => { return process.env.HOST + "/images/" + filename}) }
-      : {};
+      : [""];
 
     const doc = await Merchant.findOne({ shop: shop });
     const newReview = new Review({

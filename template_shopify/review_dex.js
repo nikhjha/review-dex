@@ -11,8 +11,8 @@ class ReviewPanel {
       return;
     }
     this.setReviewDrop();
-    this.setAddMore();
     this.setModal();
+    this.setAddMore();
     this.ismount = true;
     const widgetInfo = widgetInfoDocument.classList;
     this.shop = widgetInfo[0];
@@ -25,9 +25,15 @@ class ReviewPanel {
   setAddMore(){
     const btn = document.getElementById("review_dex_add_more_review_btn");
     btn.addEventListener("click",()=>{
-      this.items = this.items + 6;
+      this.items = this.items + 3;
       this.getInfo();
     });
+  }
+  renderAddMore(){
+    const btn = document.getElementById("review_dex_add_more_review_btn");
+    if(this.totalReviews <= this.items){
+      btn.style.display = "none";
+    }
   }
   setBadge() {
     const badges = document.querySelectorAll(".review_dex_badge");
@@ -89,6 +95,16 @@ class ReviewPanel {
     modalCloser.addEventListener("click",()=>{
       modalDiv.style.display = "none";
     }); 
+    const writeForm = document.getElementById("review_dex_write_form");
+    writeForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const modalDiv = document.querySelector(".review_dex_write_modal");
+      modalDiv.style.display = "none";
+      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
+      console.log(response);
+      location.reload();
+    });
     const modelContainer = document.querySelector(".review_dex_write_modal_container");
     modalDiv.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", (e) => {
@@ -211,15 +227,7 @@ class ReviewPanel {
       console.log(product);
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
-      const writeForm = document.getElementById("review_dex_write_form");
-    writeForm.addEventListener("submit", async(e)=>{
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const modalDiv = document.querySelector(".review_dex_write_modal");
-      modalDiv.style.display = "none";
-      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
-      console.log(response);
-    });
+      this.totalReviews = product.totalReviews;
     }else{
       const url = this.link + "/api/getMerchantDetail?shop=" + this.shop + "&items=" + this.items;
       const data = await fetch(url);
@@ -235,9 +243,11 @@ class ReviewPanel {
       };
       this.reviewData = reviews;
       this.reviewInfo = reviewInfo;
+      this.totalReviews = merchant.totalReviews;
     }
     this.renderReviewsInfo();
     this.renderReviews();
+    this.renderAddMore();
     this.setStars();
   }
 
