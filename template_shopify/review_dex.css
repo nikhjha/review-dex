@@ -55,6 +55,7 @@
     transform: translateY(100%);
     border-radius: 10px;
     padding: 20px;
+    z-index: 50;
 }
 #review_dex_sort_dropdown {
     display: none;
@@ -67,6 +68,7 @@
     transform: translateY(100%);
     border-radius: 10px;
     padding: 20px;
+    z-index: 50;
 }
 #review_dex_sort_dropdown p{
     font-size: 20px;
@@ -517,7 +519,7 @@
 }
 .review_dex_form input[type="text"]{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
 .review_dex_form input[type="email"]{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
-.review_dex_form textarea{display:block;border:none;border-bottom:1px solid #ccc;width:100%}
+.review_dex_form textarea{display:block;border:1px solid #ccc;width:100%}
 .review_dex_form_submit_btn{
     border: none;
     color: white;
