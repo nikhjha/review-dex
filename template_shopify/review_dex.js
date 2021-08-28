@@ -89,6 +89,16 @@ class ReviewPanel {
     modalCloser.addEventListener("click",()=>{
       modalDiv.style.display = "none";
     }); 
+    const modelContainer = document.querySelector(".review_dex_write_modal_container");
+    modalDiv.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const scrollTo = e.target.href.split("-");
+        const sectionNo = (scrollTo[scrollTo.length - 1] - "0");
+        const scrollHeight = (sectionNo - 1)*500;
+        modelContainer.scrollTop = scrollHeight;
+      });
+    });
     const ratingInput = document.getElementById("review_dex_form_rating");
     const btn5 = document.getElementById("review_dex_form_rating_no_5");
     btn5.addEventListener("click",(e)=>{e.preventDefault();ratingInput.value = '5';location.href = "#review_dex_form_section-2"});  
@@ -375,15 +385,6 @@ class ReviewPanel {
     });
   }
 }
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-      });
-  });
-});
 
 const reviewPanel = new ReviewPanel();
 reviewPanel.getInfo();
