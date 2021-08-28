@@ -47,7 +47,7 @@ class ReviewPanel {
         const widgetType = badge.classList[2];
         if(!productID){
           badge.querySelector(".review_dex_stars > input").value = 0;
-          badge.querySelector("span").innerHTML = "(" +0 +")";
+          badge.querySelector("span").innerHTML = "(" +0 +" reviews)";
           return;
         }
         if(widgetType === "review_dex_link_badge"){
@@ -61,7 +61,7 @@ class ReviewPanel {
         const data = await fetch(url);
         const { product } = await data.json();
         badge.querySelector(".review_dex_stars > input").value = Math.round(product.averageRating);
-        badge.querySelector(".review_dex_product_badge > span").innerHTML = "("+product.totalReviews+")";
+        badge.querySelector(".review_dex_product_badge > span").innerHTML = "("+product.totalReviews+" reviews)";
       });
       this.setStars();
     }
