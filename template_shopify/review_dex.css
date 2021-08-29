@@ -251,7 +251,6 @@
     grid-template-columns: 1fr;
     grid-auto-rows: 50%;
     background-color: white;
-    border-radius: 20px;
     position: relative;
     overflow: hidden;
     z-index: 100;
