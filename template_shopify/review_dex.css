@@ -471,8 +471,8 @@
 }
 .review_dex_section_next{
     position: absolute;
-    bottom: 20px;
-    right : 20px;
+    bottom: 10px;
+    right : 10px;
     text-decoration: none;
     cursor: pointer;
 }
@@ -483,7 +483,7 @@
 #review_dex_form_section-3{
     width: 100%;
     height: 500px;
-    padding: 0px 20%;
+    padding: 0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -496,12 +496,13 @@
 }
 #review_dex_form_section-3 p{
     font-size: 20px;
+    max-width: 300px;
     color: rgb(100,100,100);
 }
 #review_dex_form_section-4{
     width: 100%;
     height: 500px;
-    padding: 0px 20%;
+    padding: 0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -514,11 +515,12 @@
 }
 #review_dex_form_section-4 p{
     font-size: 20px;
+    max-width: 300px;
     color: rgb(100,100,100);
 }
-.review_dex_form input[type="text"]{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
-.review_dex_form input[type="email"]{padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
-.review_dex_form textarea{display:block;border:1px solid #ccc;width:100%}
+.review_dex_form input[type="text"]{max-width : 300px;padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
+.review_dex_form input[type="email"]{max-width : 300px;padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%}
+.review_dex_form textarea{max-width : 300px;display:block;border:1px solid #ccc;width:100%}
 .review_dex_form_submit_btn{
     border: none;
     color: white;
