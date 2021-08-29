@@ -245,11 +245,11 @@
     box-sizing: border-box;
 }
 .review_dex_modal_container {
-    width: 300px;
-    height: 600px;
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-auto-rows: 300px;
+    grid-auto-rows: 50%;
     background-color: white;
     border-radius: 20px;
     position: relative;
