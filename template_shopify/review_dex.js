@@ -153,8 +153,9 @@ class ReviewPanel {
     const customerImgDiv = document.querySelector(".review_dex_model_img");
     const customerImg = document.querySelector(".review_dex_model_img > img");
     if(this.modelItem.customerImg[0] && this.modelItem.customerImg[0] !== ""){
-      document.querySelector(".review_dex_modal_container").style.width = "800px";
-      customerImgDiv.style.display = "block";
+      if(document.querySelector(".review_dex_modal_container_without_img")){
+        document.querySelector(".review_dex_modal_container_without_img").className = "review_dex_modal_container";
+      }
       if(customerImg){
         customerImg.alt = this.modelItem.name;
         customerImg.src = this.modelItem.customerImg[0];
@@ -182,8 +183,9 @@ class ReviewPanel {
         });
       }
     }else{
-      document.querySelector(".review_dex_modal_container").style.width = "400px";
-      customerImgDiv.style.display = "none";
+      if(document.querySelector(".review_dex_modal_container")){
+        document.querySelector(".review_dex_modal_container").className = "review_dex_modal_container_without_img";
+      }
       const customerImg = document.querySelector(".review_dex_model_img > img");
       if(customerImg){
         customerImg.remove();
