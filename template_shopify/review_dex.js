@@ -46,8 +46,7 @@ class ReviewPanel {
         const productID = badge.classList[3];
         const widgetType = badge.classList[2];
         if(!productID){
-          badge.querySelector(".review_dex_stars > input").value = 0;
-          badge.querySelector("span").innerHTML = "(" +0 +" reviews)";
+          badge.style.display = "none";
           return;
         }
         if(widgetType === "review_dex_link_badge"){
@@ -60,6 +59,10 @@ class ReviewPanel {
         const url = this.link + "/api/products?shop=" + shop + "&product_id="+productID + "&with_reviews=false";
         const data = await fetch(url);
         const { product } = await data.json();
+        if(product.totalReviews === 0){
+          badge.style.display = "none";
+          return;
+        }
         badge.querySelector(".review_dex_stars > input").value = Math.round(product.averageRating);
         badge.querySelector(".review_dex_product_badge > span").innerHTML = "("+product.totalReviews+" reviews)";
       });
@@ -147,8 +150,11 @@ class ReviewPanel {
     bodyDiv.innerHTML = this.modelItem.body;
     const productInfoDiv = document.querySelector(".review_dex_model_content_footer > .review_dex_product > p");
     productInfoDiv.innerHTML = this.modelItem.about;
+    const customerImgDiv = document.querySelector(".review_dex_model_img");
     const customerImg = document.querySelector(".review_dex_model_img > img");
     if(this.modelItem.customerImg[0] && this.modelItem.customerImg[0] !== ""){
+      document.querySelector(".review_dex_modal_container").style.width = "800px";
+      customerImgDiv.style.display = "block";
       if(customerImg){
         customerImg.alt = this.modelItem.name;
         customerImg.src = this.modelItem.customerImg[0];
@@ -176,6 +182,8 @@ class ReviewPanel {
         });
       }
     }else{
+      document.querySelector(".review_dex_modal_container").style.width = "400px";
+      customerImgDiv.style.display = "none";
       const customerImg = document.querySelector(".review_dex_model_img > img");
       if(customerImg){
         customerImg.remove();

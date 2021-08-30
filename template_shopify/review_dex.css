@@ -257,7 +257,7 @@
 }
 @media screen and (min-width: 800px) {
     .review_dex_modal_container {
-        width: 800px;
+        width: 400px;
         height: 500px;
         display: grid;
         grid-template-columns: 1fr 1fr;
