@@ -57,14 +57,12 @@ export default function MyProvider(props) {
   const axiosFetch = async (fetchCallback) => {
     const response = await fetchCallback(instance);
     console.log(response);
-    console.log(response.headers["x-idont-know"]);
-    console.log(response.headers["X-Shopify-API-Request-Failure-Reauthorize"]);
     if (
-      response.headers.get("X-Shopify-API-Request-Failure-Reauthorize") === "1"
+      response.headers["x-shopify-api-request-failure-reauthorize"] && response.headers["x-shopify-api-request-failure-reauthorize"] === "1"
     ) {
-      const authUrlHeader = response.headers.get(
-        "X-Shopify-API-Request-Failure-Reauthorize-Url"
-      );
+      const authUrlHeader = response.headers[
+        "x-shopify-api-request-failure-reauthorize-url"
+      ];
 
       const redirect = Redirect.create(app);
       redirect.dispatch(Redirect.Action.APP, authUrlHeader || `/auth`);

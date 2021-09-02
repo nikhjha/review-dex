@@ -1,5 +1,4 @@
 import Router from "koa-router";
-import multer from "@koa/multer";
 import Shopify from "@shopify/shopify-api";
 import Merchant from "../model/merchant";
 import Review from "../model/review";
@@ -7,18 +6,10 @@ import * as csv from "fast-csv";
 import * as fs from "fs";
 import * as path from "path";
 import axios from "axios";
+import csvUpload from "../storage/csvUpload";
 
 const router = Router();
 
-const storage = multer.diskStorage({
-  destination: path.resolve("server", "..", "public", "csv"),
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
 
 const download = async (url, path) => {
   const writer = fs.createWriteStream(path);
@@ -36,11 +27,13 @@ const download = async (url, path) => {
     writer.on("error", reject);
   });
 };
+
 const generateName = (url) => {
   const filename = path.basename(url);
   const imgName = "myImage" + Date.now() + filename;
   return imgName;
 };
+
 const downloadImg = async (url, imgName) => {
   const imgPath =
     path.resolve("server", "..", "public", "images") + "/" + imgName;
@@ -48,27 +41,7 @@ const downloadImg = async (url, imgName) => {
   return response;
 };
 
-function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /csv/;
-  // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  if (extname) {
-    return cb(null, true);
-  } else {
-    cb("Error: csv Only!");
-  }
-}
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-});
-
-router.post("/", upload.single("myCSV"), async (ctx) => {
+router.post("/", csvUpload.single("myCSV"), async (ctx) => {
   try {
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
 

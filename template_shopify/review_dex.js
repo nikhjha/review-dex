@@ -56,7 +56,7 @@ class ReviewPanel {
             location.href = "#review_dex_widget_info"; 
           });
         }
-        const url = this.link + "/api/products?shop=" + shop + "&product_id="+productID + "&with_reviews=false";
+        const url = this.link + "/shop/product?shop=" + shop + "&product_id="+productID + "&with_reviews=false";
         const data = await fetch(url);
         const { product } = await data.json();
         if(product.totalReviews === 0){
@@ -104,7 +104,7 @@ class ReviewPanel {
       const formData = new FormData(e.target);
       const modalDiv = document.querySelector(".review_dex_write_modal");
       modalDiv.style.display = "none";
-      const response = await fetch(this.link + "/api/review?shop="+this.shop, {method : "post", body : formData});
+      const response = await fetch(this.link + "/shop/review?shop="+this.shop, {method : "post", body : formData});
       console.log(response);
       location.reload();
     });
@@ -222,7 +222,7 @@ class ReviewPanel {
       return;
     }
     if(this.productReview){
-      const url = this.link + "/api/products?shop=" + this.shop + "&product_id="+ this.productID + "&with_reviews=true&items=" + this.items;
+      const url = this.link + "/shop/product?shop=" + this.shop + "&product_id="+ this.productID + "&with_reviews=true&items=" + this.items;
       const data = await fetch(url);
       const { product, reviews } = await data.json();
       const reviewInfo = {
@@ -239,7 +239,7 @@ class ReviewPanel {
       this.reviewInfo = reviewInfo;
       this.totalReviews = product.totalReviews;
     }else{
-      const url = this.link + "/api/getMerchantDetail?shop=" + this.shop + "&items=" + this.items;
+      const url = this.link + "/shop/review?shop=" + this.shop + "&items=" + this.items;
       const data = await fetch(url);
       const { merchant, reviews } = await data.json();
       const reviewInfo = {

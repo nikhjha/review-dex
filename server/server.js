@@ -2,18 +2,22 @@ import "@babel/polyfill";
 import dotenv from "dotenv";
 import "isomorphic-fetch";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
-import Shopify, { ApiVersion, DataType } from "@shopify/shopify-api";
+import Shopify, { ApiVersion } from "@shopify/shopify-api";
 import { connect as mongoose } from "mongoose";
 import Koa from "koa";
 import next from "next";
 import Router from "koa-router";
 import serve from "koa-static";
-import path from "path";
-import apiRouter from "./api";
-import Merchant from "./model/merchant";
 import cors from "koa2-cors";
 import bodyParser from "koa-bodyparser";
+import path from "path";
+import Merchant from "./model/merchant";
+import storeRouter from "./api/store";
+import shopRouter from "./api/shop";
 import themeRouter from "./theme";
+
+
+
 
 dotenv.config();
 
@@ -117,7 +121,8 @@ app.prepare().then(async () => {
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
   router.get("/_next/image", handleRequest); // image content is clear
-  router.use("/api", apiRouter.routes());
+  router.use("/shop", shopRouter.routes());
+  router.use("/store", storeRouter.routes());
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 

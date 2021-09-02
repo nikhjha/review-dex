@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState} from "react";
-import { AxiosContext } from "./MyProvider";
+import { AxiosContext } from "../MyProvider";
 import { Card, Toast } from "@shopify/polaris";
 
 export default function Widget() {

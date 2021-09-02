@@ -1,6 +1,6 @@
 import React, { useContext,useState } from "react";
 import { Modal, Form, FormLayout, Button } from "@shopify/polaris";
-import { AxiosContext } from "./MyProvider";
+import { AxiosContext } from "../MyProvider";
 import { Heading } from "@shopify/polaris";
 
 export default function ImportReview({ active, setActive }) {
@@ -12,7 +12,7 @@ export default function ImportReview({ active, setActive }) {
     try {
       const result = await axiosFetch(async (instance) => {
         const formData = new FormData(e.target);
-        const response = await instance.post("/api/import-reviews", formData);
+        const response = await instance.post("/store/import-reviews", formData);
         return response;
       });
       console.log(result);

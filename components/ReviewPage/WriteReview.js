@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Modal, Form, FormLayout, TextField, Button } from "@shopify/polaris";
-import { AxiosContext } from "./MyProvider";
+import { AxiosContext } from "../MyProvider";
 import { ResourcePicker } from "@shopify/app-bridge-react";
 
 export default function WriteReview({ active, setActive }) {
@@ -20,7 +20,7 @@ export default function WriteReview({ active, setActive }) {
     try {
       const result = await axiosFetch(async (instance) => {
         const formData = new FormData(e.target);
-        const response = await instance.post("/api/review", formData);
+        const response = await instance.post("/store/review", formData);
         return response;
       });
       console.log("submitted");

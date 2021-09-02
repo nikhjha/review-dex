@@ -5,7 +5,7 @@ import icon2 from "../public/icon-2.png";
 import icon3 from "../public/icon-3.png";
 import Image from "next/image";
 import { Page, Stack } from "@shopify/polaris";
-import { AxiosContext } from "./MyProvider";
+import { AxiosContext } from "../MyProvider";
 
 export default function Statistics() {
     const { axiosFetch } = useContext(AxiosContext);
@@ -15,7 +15,7 @@ export default function Statistics() {
     useEffect(() => {
         async function getData() {
             const result = await axiosFetch(async (instance) => {
-                const response = await instance.get("/api/merchant");
+                const response = await instance.get("/store/merchant");
                 return response;
             });
             const merchant = result.data.merchant;

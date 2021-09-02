@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/dist/client/router";
 import { Page, Card, Layout, } from "@shopify/polaris";
-import Statistics from "../components/Statistics";
+import Statistics from "../components/Home/Statistics";
 
-import Widget from "../components/Widget";
+import Widget from "../components/Home/Widget";
 
 const Index = () => {
   const router = useRouter();

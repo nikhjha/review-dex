@@ -9,7 +9,7 @@ import {
   TextStyle,
 } from "@shopify/polaris";
 import { StarFilledMinor, StarOutlineMinor } from "@shopify/polaris-icons";
-import { AxiosContext } from "./MyProvider";
+import { AxiosContext } from "../MyProvider";
 
 export default function ReviewTab({ tabs , setPageLoading }) {
   const { axiosFetch } = useContext(AxiosContext);
@@ -23,7 +23,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
   useEffect(() => {
     async function getData() {
       const result = await axiosFetch(async (instance) => {
-        const response = await instance.get("/api/reviews");
+        const response = await instance.get("/store/review");
         return response;
       });
       const reviews = result.data.reviews;
@@ -75,7 +75,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
         console.log(selectedResources);
         selectedResources.forEach(async (id) => {
           await axiosFetch(async (instance) => {
-            const response = await instance.post("/api/publish/" + id);
+            const response = await instance.post("/store/publish/" + id);
             return response;
           });
         });
@@ -91,7 +91,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
         console.log(selectedResources);
         selectedResources.forEach(async (id) => {
           await axiosFetch(async (instance) => {
-            const response = await instance.post("/api/hide/" + id);
+            const response = await instance.post("/store/hide/" + id);
             return response;
           });
         });
