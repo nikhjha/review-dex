@@ -178,6 +178,7 @@ router.post("/review", upload.array("myImage"), async (ctx) => {
 
 router.get("/merchant", verifyRequest({ returnHeader: true }), async (ctx) => {
   try {
+    ctx.set("X-Idont-know","random");
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     console.log(shop);
     const doc = await Merchant.findOne({ shop: shop });
