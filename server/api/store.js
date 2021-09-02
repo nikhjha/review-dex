@@ -9,7 +9,7 @@ import { verifyRequest } from "@shopify/koa-shopify-auth";
 const router = Router();
 
 
-router.get("/review", verifyRequest({ returnHeader: true }), async (ctx) => {
+router.get("/reviews", verifyRequest({ returnHeader: true }), async (ctx) => {
   try {
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     const doc = await Merchant.findOne({ shop: shop });

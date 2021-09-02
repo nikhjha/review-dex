@@ -23,7 +23,7 @@ export default function ReviewTab({ tabs , setPageLoading }) {
   useEffect(() => {
     async function getData() {
       const result = await axiosFetch(async (instance) => {
-        const response = await instance.get("/store/review");
+        const response = await instance.get("/store/reviews");
         return response;
       });
       const reviews = result.data.reviews;

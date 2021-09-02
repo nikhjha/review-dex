@@ -1,5 +1,4 @@
 import Router from "koa-router";
-import Shopify from "@shopify/shopify-api";
 import Merchant from "../model/merchant";
 import Review from "../model/review";
 import imageUpload from "../storage/imageUpload";
