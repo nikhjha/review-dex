@@ -56,6 +56,7 @@ export default function MyProvider(props) {
   });
   const axiosFetch = async (fetchCallback) => {
     const response = await fetchCallback(instance);
+    console.log(response);
     if (
       response.headers.get("X-Shopify-API-Request-Failure-Reauthorize") === "1"
     ) {
