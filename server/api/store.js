@@ -72,6 +72,7 @@ router.post(
   async (ctx) => {
     try {
       const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+      const shop = session.shop;
       const source = "ADMIN";
 
       const { name, about, email, title, body, product_id } = ctx.request.body;
@@ -90,7 +91,7 @@ router.post(
           }
         : [""];
 
-      const doc = await Merchant.findOne({ shop: session.shop });
+      const doc = await Merchant.findOne({ shop: shop });
       const newReview = new Review({
         merchantID: doc.id,
         name,
