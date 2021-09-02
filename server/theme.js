@@ -1,13 +1,14 @@
 import Router from "koa-router";
 import fs from "fs";
 import Shopify, {  DataType } from "@shopify/shopify-api";
+import  { verifyRequest } from "@shopify/koa-shopify-auth";
 import * as path from "path";
 
 const router = Router();
 
 
 
-router.post("/", async (ctx) => {
+router.post("/", verifyRequest({ returnHeader: true }), async (ctx) => {
     try {
       // Load the current session to get the `accessToken`.
       const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);

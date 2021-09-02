@@ -6,6 +6,7 @@ import Review from "./model/review";
 import path from "path";
 import csvRouter from "./api/csv";
 import productRouter from "./api/product";
+import  { verifyRequest } from "@shopify/koa-shopify-auth";
 
 const router = Router();
 
@@ -65,7 +66,7 @@ router.get("/getMerchantDetail", async (ctx) => {
   }
 });
 
-router.get("/reviews", async (ctx) => {
+router.get("/reviews", verifyRequest({ returnHeader: true }), async (ctx) => {
   try {
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     const doc = await Merchant.findOne({ shop: shop });
@@ -83,7 +84,7 @@ router.get("/reviews", async (ctx) => {
   }
 });
 
-router.post("/publish/:id", async (ctx) => {
+router.post("/publish/:id", verifyRequest({ returnHeader: true }), async (ctx) => {
   const id = ctx.params.id;
   try {
     await Review.updateOne({ _id: id }, { $set: { hidden: false } });
@@ -94,7 +95,7 @@ router.post("/publish/:id", async (ctx) => {
   }
 });
 
-router.post("/hide/:id", async (ctx) => {
+router.post("/hide/:id", verifyRequest({ returnHeader: true }), async (ctx) => {
   const id = ctx.params.id;
   try {
     await Review.updateOne({ _id: id }, { $set: { hidden: true } });
@@ -175,7 +176,7 @@ router.post("/review", upload.array("myImage"), async (ctx) => {
   }
 });
 
-router.get("/merchant", async (ctx) => {
+router.get("/merchant", verifyRequest({ returnHeader: true }), async (ctx) => {
   try {
     const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     console.log(shop);
