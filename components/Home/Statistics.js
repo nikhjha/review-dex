@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState} from 'react';
-import styles from "../styles/Statistic.module.css";
+import styles from "../../styles/Statistic.module.css";
 import icon1 from "../public/icon-1.png";
 import icon2 from "../public/icon-2.png";
 import icon3 from "../public/icon-3.png";
