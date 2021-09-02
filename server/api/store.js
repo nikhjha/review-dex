@@ -136,7 +136,6 @@ router.post(
     } catch (e) {
       ctx.response.status = 400;
       ctx.response.body = e;
-      console.log(e);
     }
   }
 );
