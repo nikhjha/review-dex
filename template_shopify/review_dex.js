@@ -46,7 +46,6 @@ class ReviewPanel {
         const productID = badge.classList[3];
         const widgetType = badge.classList[2];
         if(!productID){
-          badge.style.display = "none";
           return;
         }
         if(widgetType === "review_dex_link_badge"){
@@ -60,8 +59,9 @@ class ReviewPanel {
         const data = await fetch(url);
         const { product } = await data.json();
         if(product.totalReviews === 0){
-          badge.style.display = "none";
           return;
+        }else{
+          badge.style.display = "block";
         }
         badge.querySelector(".review_dex_stars > input").value = Math.round(product.averageRating);
         badge.querySelector(".review_dex_product_badge > span").innerHTML = "("+product.totalReviews+" reviews)";

@@ -401,6 +401,9 @@
     display: none;
 }
 
+.review_dex_badge_div{
+    display: none;    
+}
 
 .review_dex_product_badge{
     display: flex;
