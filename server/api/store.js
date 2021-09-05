@@ -28,16 +28,15 @@ router.get("/review", verifyRequest({ returnHeader: true }), async (ctx) => {
 });
 
 router.get("/merchant", verifyRequest({ returnHeader: true }), async (ctx) => {
-  // try {
-  //   const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
-  //   const doc = await Merchant.findOne({ shop: shop });
-  //   ctx.response.status = 200;
-  //   ctx.response.body = { merchant: doc };
-  // } catch (e) {
-  //   ctx.response.status = 400;
-  //   ctx.response.body = e;
-  // }
-  ctx.response.status = 400;
+  try {
+    const { shop } = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    const doc = await Merchant.findOne({ shop: shop });
+    ctx.response.status = 200;
+    ctx.response.body = { merchant: doc };
+  } catch (e) {
+    ctx.response.status = 400;
+    ctx.response.body = e;
+  }
 });
 
 router.post(
