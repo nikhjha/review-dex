@@ -15,12 +15,8 @@ export default function Statistics() {
     useEffect(() => {
         async function getData() {
             const result = await axiosFetch(async (instance) => {
-              try{
-                const response = await instance.get("/store/merchant");
-                return response;
-              }catch(e){
-                console.log(e.response);
-              }
+              const response = await instance.get("/store/merchant");
+              return response;
             });
             const merchant = result.data.merchant;
             setTotalReviews(merchant.totalReviews);

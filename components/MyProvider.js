@@ -55,20 +55,26 @@ export default function MyProvider(props) {
       });
   });
   const axiosFetch = async (fetchCallback) => {
-    const response = await fetchCallback(instance);
-    console.log(response);
-    if (
-      response.headers["x-shopify-api-request-failure-reauthorize"] && response.headers["x-shopify-api-request-failure-reauthorize"] === "1"
-    ) {
-      const authUrlHeader = response.headers[
-        "x-shopify-api-request-failure-reauthorize-url"
-      ];
-
-      const redirect = Redirect.create(app);
-      redirect.dispatch(Redirect.Action.APP, authUrlHeader || `/auth`);
-      return null;
+    try{
+      const response = await fetchCallback(instance);
+      console.log(response);
+      return response;
+    }catch(e){
+      const response  = e.response;
+      console.log(response);
+      if (
+        response.headers["x-shopify-api-request-failure-reauthorize"] && response.headers["x-shopify-api-request-failure-reauthorize"] === "1"
+      ) {
+        const authUrlHeader = response.headers[
+          "x-shopify-api-request-failure-reauthorize-url"
+        ];
+  
+        const redirect = Redirect.create(app);
+        redirect.dispatch(Redirect.Action.APP, authUrlHeader || `/auth`);
+        return null;
+      }
+      return response;
     }
-    return response;
   };
   const value = {
     axiosFetch,
