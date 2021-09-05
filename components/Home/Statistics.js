@@ -19,7 +19,7 @@ export default function Statistics() {
                 const response = await instance.get("/store/merchant");
                 return response;
               }catch(e){
-                console.log(e);
+                console.log(e.response);
               }
             });
             const merchant = result.data.merchant;
