@@ -58,7 +58,6 @@ export default function MyProvider(props) {
     try{
       const response = await fetchCallback(instance);
       console.log(response);
-      return response;
     }catch(e){
       const response  = e.response;
       console.log(response);
