@@ -76,6 +76,60 @@ class ReviewPanel {
       modalDiv.style.display = "none";
       this.modelItem = {};
     }); 
+    const nextBtn  = document.querySelector(".review_dex_review_forward");
+    const backBtn  = document.querySelector(".review_dex_review_back");
+    function findNextImg(modelItem, reviewData) {
+      if(modelItem === (reviewData.length)){
+        return -1;
+      }
+      const item = reviewData[modelItem];
+      if(item.customerImg[0] && item.customerImg[0] !== ""){
+        return modelItem;
+      }else{
+        return findNextImg(modelItem + 1, reviewData);
+      }
+    }
+    function findNext(modelItem,reviewData) {
+      if(modelItem === (reviewData.length -1)){
+        return modelItem;
+      }
+      const found =  findNextImg(modelItem + 1, reviewData);
+      if(found === -1){
+        return modelItem;
+      }else{
+        return found;
+      }
+    }
+    function findPrevImg(modelItem, reviewData) {
+      if(modelItem === -1){
+        return -1;
+      }
+      const item = reviewData[modelItem];
+      if(item.customerImg[0] && item.customerImg[0] !== ""){
+        return modelItem;
+      }else{
+        return findPrevImg(modelItem - 1, reviewData);
+      }
+    }
+    function findPrev(modelItem,reviewData) {
+      if(modelItem === 0){
+        return modelItem;
+      }
+      const found =  findPrevImg(modelItem - 1, reviewData);
+      if(found === -1){
+        return modelItem;
+      }else{
+        return found;
+      }
+    }
+    nextBtn.addEventListener("click",()=>{
+      this.modelItem = findNext(this.modelItem,this.reviewData);
+      this.renderModel();
+    });
+    backBtn.addEventListener("click",()=>{
+      this.modelItem = findPrev(this.modelItem,this.reviewData);
+      this.renderModel();
+    });
   }
   setWriteModal() {
     const writeBtn = document.querySelector("#review_dex_write_review_btn");
@@ -135,30 +189,39 @@ class ReviewPanel {
     document.addEventListener("click", (e)=>{
       if(e.target === model){
         model.style.display = "none";
-        this.modelItem = {};
+        this.modelItem = -1;
       }
     });
+    const modelItem = this.reviewData[this.modelItem];
+    const nextBtn  = document.querySelector(".review_dex_review_forward");
+    const backBtn  = document.querySelector(".review_dex_review_back");
+    if(!modelItem.customerImg[0] || modelItem.customerImg[0] === ""){
+      nextBtn.style.display = "none";
+      backBtn.style.display = "none";
+    }else{
+      nextBtn.style.display = "block";
+      backBtn.style.display = "block";
+    }
     const nameDiv = document.querySelector(".review_dex_model_content_header_1 > p");
-    nameDiv.innerHTML = this.modelItem.name;
+    nameDiv.innerHTML = modelItem.name;
     const ratingDiv = document.querySelector(".review_dex_model_content_header_1 > .review_dex_stars > input ");
-    ratingDiv.value = this.modelItem.rating;
+    ratingDiv.value = modelItem.rating;
     const dateDiv = document.querySelector(".review_dex_model_content_header_2 > p:nth-child(1)");
-    dateDiv.innerHTML = this.modelItem.created.substring(0,10);
+    dateDiv.innerHTML = modelItem.created.substring(0,10);
     const varifiedDiv = document.querySelector(".review_dex_model_content_header_2 > p:nth-child(2)");
-    varifiedDiv.innerHTML = this.modelItem.verified ? "<span class='material-icons'> verified </span>Verified Purchase" : "";
+    varifiedDiv.innerHTML = modelItem.verified ? "<span class='material-icons'> verified </span>Verified Purchase" : "";
     const bodyDiv = document.querySelector(".review_dex_model_content > p");
-    bodyDiv.innerHTML = this.modelItem.body;
+    bodyDiv.innerHTML = modelItem.body;
     const productInfoDiv = document.querySelector(".review_dex_model_content_footer > .review_dex_product > p");
-    productInfoDiv.innerHTML = this.modelItem.about;
-    const customerImgDiv = document.querySelector(".review_dex_model_img");
+    productInfoDiv.innerHTML = modelItem.about;
     const customerImg = document.querySelector(".review_dex_model_img > img");
-    if(this.modelItem.customerImg[0] && this.modelItem.customerImg[0] !== ""){
+    if(modelItem.customerImg[0] && modelItem.customerImg[0] !== ""){
       if(document.querySelector(".review_dex_modal_container_without_img")){
         document.querySelector(".review_dex_modal_container_without_img").className = "review_dex_modal_container";
       }
       if(customerImg){
-        customerImg.alt = this.modelItem.name;
-        customerImg.src = this.modelItem.customerImg[0];
+        customerImg.alt = modelItem.name;
+        customerImg.src = modelItem.customerImg[0];
         customerImg.addEventListener("load",()=>{
           const aspectRatio = customerImg.getBoundingClientRect().width / customerImg.getBoundingClientRect().height;
           if(aspectRatio > 1){
@@ -170,8 +233,8 @@ class ReviewPanel {
       }else{
         const modelImg = document.querySelector(".review_dex_model_img"); 
         const customerImg = document.createElement("img");
-        customerImg.alt = this.modelItem.name;
-        customerImg.src = this.modelItem.customerImg[0];
+        customerImg.alt = modelItem.name;
+        customerImg.src = modelItem.customerImg[0];
         modelImg.append(customerImg);
         customerImg.addEventListener("load",()=>{
           const aspectRatio = customerImg.getBoundingClientRect().width / customerImg.getBoundingClientRect().height;
@@ -325,7 +388,7 @@ class ReviewPanel {
     const reviewContentDiv = document.querySelector(".review_dex_content");
     const prevDataDivs = document.querySelectorAll(".review_dex_item");
     prevDataDivs.forEach((dataDiv) => {dataDiv.remove()});
-    reviewData.forEach((reviewItem) => {
+    reviewData.forEach((reviewItem,index) => {
       const reviewItemMainDiv = document.createElement("div");
       reviewItemMainDiv.className = "review_dex_item";
       const reviewItemDiv = document.createElement("div");
@@ -370,8 +433,7 @@ class ReviewPanel {
       }
       reviewItemMainDiv.appendChild(reviewItemDiv);
       reviewItemMainDiv.addEventListener("click",()=>{
-        this.modelItem = reviewItem;
-        console.log(this.modelItem);
+        this.modelItem = index;
         const modalDiv = document.querySelector(".review_dex_modal");
         modalDiv.style.display = "flex";
         this.renderModel();
